@@ -15,7 +15,9 @@ public class OrderEntity {
     public OrderEntity() {
     }
 
-    public OrderEntity(UUID uuid, LocalDateTime creationDateTime, String clientDocument, UUID productUuid, Integer quantity, String extraInformation, BigDecimal subTotal, BigDecimal tax, BigDecimal grandTotal, Boolean delivered, LocalDateTime deliveredDate, ClientEntity client, ProductEntity product) {
+    public OrderEntity(UUID uuid, LocalDateTime creationDateTime, String clientDocument, UUID productUuid,
+            Integer quantity, String extraInformation, BigDecimal subTotal, BigDecimal tax, BigDecimal grandTotal,
+            Boolean delivered, LocalDateTime deliveredDate, ClientEntity client, ProductEntity product) {
         this.uuid = uuid;
         this.creationDateTime = creationDateTime;
         this.clientDocument = clientDocument;
@@ -39,13 +41,13 @@ public class OrderEntity {
     @NotNull(message = "La fecha del cliente no puede ser vacio")
     private LocalDateTime creationDateTime;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     @NotNull(message = "El documento del cliente no puede ser vacio")
     @Size(max = 20, message = "El documento no puede tener más de 20 caracteres")
     private String clientDocument;
 
-    @Column(nullable = false)
-    @NotNull(message = "El documento del cliente no puede ser vacio")
+    @Column(nullable = false, unique = true)
+    @NotNull(message = "El producto no puede ser vacio")
     private UUID productUuid;
 
     @Column(nullable = false)
@@ -83,11 +85,11 @@ public class OrderEntity {
     private LocalDateTime deliveredDate;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "clientDocument", referencedColumnName = "document", insertable = false, updatable = false)
+    @JoinColumn(name = "clientDocument", referencedColumnName = "document", unique = true, insertable = false, updatable = false)
     private ClientEntity client;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "productUuid", referencedColumnName = "uuid", insertable = false, updatable = false)
+    @JoinColumn(name = "productUuid", referencedColumnName = "uuid", unique = true, insertable = false, updatable = false)
     private ProductEntity product;
 
     public UUID getUuid() {

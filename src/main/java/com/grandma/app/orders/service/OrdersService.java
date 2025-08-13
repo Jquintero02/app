@@ -8,5 +8,6 @@ import java.util.UUID;
 
 public interface OrdersService {
     OrderEntity createOrder(OrderDto order);
+
     OrderEntity updateOrder(UUID uuid, LocalDateTime timestamp);
 }

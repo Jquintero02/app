@@ -11,14 +11,12 @@ import java.time.LocalDateTime;
 public class OrdersExceptionHandler extends GlobalExceptionHandler {
 
     @ExceptionHandler(OrderNotFoundException.class)
-    public ResponseEntity<ResponseDto> handle(OrderNotFoundException exception){
+    public ResponseEntity<ResponseDto> handle(OrderNotFoundException exception) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
                 new ResponseDto(
                         HttpStatus.NOT_FOUND.toString(),
                         LocalDateTime.now(),
                         exception.getMessage(),
-                        "OrderNotFoundException"
-                )
-        );
+                        "OrderNotFoundException"));
     }
 }
