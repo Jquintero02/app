@@ -45,9 +45,7 @@ public class ProductsController {
                     "Formato de uuid inválido: %s", uuid));
         }
 
-        var product = service.getProduct(uuid);
-
-        return ResponseEntity.status(HttpStatus.OK).body(product);
+        return ResponseEntity.status(HttpStatus.OK).body(service.getProduct(uuid));
     }
 
     @PutMapping("/{uuid}")

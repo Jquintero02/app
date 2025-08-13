@@ -14,6 +14,8 @@ public interface ProductsService {
 
     void deleteProduct(UUID uuid);
 
+    boolean existsByFantasyName(String fantasyName);
+
     // BONUS TRACK
     List<ProductDto> findByPartialFantasyName(String partialFantasyName);
 }

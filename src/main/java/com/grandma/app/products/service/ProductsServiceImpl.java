@@ -2,6 +2,7 @@ package com.grandma.app.products.service;
 
 import com.grandma.app.clients.exception.ClientNotFoundException;
 import com.grandma.app.products.dto.ProductDto;
+import com.grandma.app.products.exception.ProductAlreadyExistsException;
 import com.grandma.app.products.exception.ProductNotFoundException;
 import com.grandma.app.products.mapper.ProductMapper;
 import com.grandma.app.products.repository.ProductsRepository;
@@ -21,7 +22,14 @@ public class ProductsServiceImpl implements ProductsService {
     }
 
     public ProductDto createProduct(ProductDto product) {
-        return mapper.toDto(repository.save(mapper.toEntity(product)));
+        if (repository.existsByFantasyName(product.getFantasyName())) {
+            throw new ProductAlreadyExistsException(
+                    String.format("Producto con nombre %s ya existe", product.getFantasyName()));
+        }
+
+        var savedProduct = repository.save(mapper.toEntity(product));
+
+        return mapper.toDto(savedProduct);
     }
 
     public ProductDto getProduct(UUID uuid) {
@@ -59,7 +67,7 @@ public class ProductsServiceImpl implements ProductsService {
         repository.deleteById(uuid);
     }
 
-    public Boolean existsByFantasyName(String fantasyName) {
+    public boolean existsByFantasyName(String fantasyName) {
         return repository.existsByFantasyName(fantasyName);
     }
 
