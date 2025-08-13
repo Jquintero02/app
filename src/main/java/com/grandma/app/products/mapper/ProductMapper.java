@@ -13,6 +13,7 @@ public class ProductMapper {
         ProductDto productDto = new ProductDto();
 
         productDto.setFantasyName(product.getFantasyName().toUpperCase());
+        productDto.setCategory(product.getCategory());
         productDto.setDescription(product.getDescription());
         productDto.setPrice(product.getPrice());
         productDto.setAvailable(product.getAvailable());
@@ -27,6 +28,7 @@ public class ProductMapper {
         ProductEntity productEntity = new ProductEntity();
 
         productEntity.setFantasyName(product.getFantasyName().toUpperCase());
+        productEntity.setCategory(product.getCategory());
         productEntity.setDescription(product.getDescription());
         productEntity.setPrice(product.getPrice());
         productEntity.setAvailable(product.isAvailable());

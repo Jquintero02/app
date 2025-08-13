@@ -8,7 +8,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 @Entity
 @Table(name = "products")
@@ -18,7 +17,7 @@ public class ProductEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID uuid;
+    private String uuid;
 
     @Column(name = "fantasy_name", nullable = false, unique = true)
     @NotNull(message = "El nombre no puede ser vacio")
@@ -44,11 +43,11 @@ public class ProductEntity {
     @NotNull(message = "El estado no puede ser vacio")
     private boolean available;
 
-    public UUID getUuid() {
+    public String getUuid() {
         return uuid;
     }
 
-    public void setUuid(UUID uuid) {
+    public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 

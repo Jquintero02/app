@@ -3,16 +3,15 @@ package com.grandma.app.products.service;
 import com.grandma.app.products.dto.ProductDto;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface ProductsService {
     ProductDto createProduct(ProductDto product);
 
-    ProductDto getProduct(UUID uuid);
+    ProductDto getProduct(String uuid);
 
-    void updateProduct(UUID uuid, ProductDto product);
+    void updateProduct(String uuid, ProductDto product);
 
-    void deleteProduct(UUID uuid);
+    void deleteProduct(String uuid);
 
     boolean existsByFantasyName(String fantasyName);
 

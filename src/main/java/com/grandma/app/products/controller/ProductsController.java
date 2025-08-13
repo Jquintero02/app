@@ -9,8 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
-
 @RestController
 @RequestMapping("/products")
 public class ProductsController {
@@ -39,7 +37,7 @@ public class ProductsController {
     }
 
     @GetMapping("/{uuid}")
-    public ResponseEntity<ProductDto> getProduct(@PathVariable("uuid") UUID uuid) {
+    public ResponseEntity<ProductDto> getProduct(@PathVariable("uuid") String uuid) {
         if (uuid == null) {
             throw new IllegalArgumentException(String.format(
                     "Formato de uuid inválido: %s", uuid));
@@ -49,7 +47,7 @@ public class ProductsController {
     }
 
     @PutMapping("/{uuid}")
-    public ResponseEntity<?> updateproduct(@PathVariable("uuid") UUID uuid,
+    public ResponseEntity<?> updateproduct(@PathVariable("uuid") String uuid,
             @Valid @RequestBody ProductDto product) {
         if (uuid == null) {
             throw new IllegalArgumentException(String.format(
@@ -77,7 +75,7 @@ public class ProductsController {
     }
 
     @DeleteMapping("/{uuid}")
-    public ResponseEntity<?> deleteproduct(@PathVariable("uuid") UUID uuid) {
+    public ResponseEntity<?> deleteproduct(@PathVariable("uuid") String uuid) {
         if (uuid == null) {
             throw new IllegalArgumentException(String.format(
                     "Formato de uuid no válido: %s", uuid));

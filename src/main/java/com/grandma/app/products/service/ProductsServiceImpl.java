@@ -9,7 +9,6 @@ import com.grandma.app.products.repository.ProductsRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class ProductsServiceImpl implements ProductsService {
@@ -30,14 +29,14 @@ public class ProductsServiceImpl implements ProductsService {
         return mapper.toDto(repository.save(mapper.toEntity(product)));
     }
 
-    public ProductDto getProduct(UUID uuid) {
+    public ProductDto getProduct(String uuid) {
         return repository.findByUuid(uuid)
                 .map(mapper::toDto)
                 .orElseThrow(() -> new ProductNotFoundException(
                         String.format("Product con uuid %s no encontrado", uuid)));
     }
 
-    public void updateProduct(UUID uuid, ProductDto product) {
+    public void updateProduct(String uuid, ProductDto product) {
         var existingProduct = repository.findByUuid(uuid)
                 .orElseThrow(() -> new ClientNotFoundException(
                         String.format("Producto con uuid %s no encontrado", uuid)));
@@ -61,7 +60,7 @@ public class ProductsServiceImpl implements ProductsService {
         repository.save(existingProduct);
     }
 
-    public void deleteProduct(UUID uuid) {
+    public void deleteProduct(String uuid) {
         repository.deleteById(uuid);
     }
 

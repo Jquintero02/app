@@ -8,13 +8,14 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Repository
-public interface ProductsRepository extends JpaRepository<ProductEntity, UUID> {
+public interface ProductsRepository extends JpaRepository<ProductEntity, String> {
     boolean existsByFantasyName(String fantasyName);
 
-    Optional<ProductEntity> findByUuid(UUID uuid);
+    Optional<ProductEntity> findByUuid(String uuid);
+
+    void deleteByUuid(String uuid);
 
     // BONUS TRACK
     @Query("SELECT p FROM ProductEntity p WHERE LOWER(p.fantasyName) LIKE LOWER(CONCAT('%', :partialFantasyName, '%')) ORDER BY p.fantasyName ASC")
