@@ -1,20 +1,13 @@
 package com.grandma.app.orders.controller;
 
-import java.time.LocalDateTime;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.grandma.app.orders.dto.OrderDto;
 import com.grandma.app.orders.service.OrdersServiceImpl;
-
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/orders")
@@ -35,11 +28,13 @@ public class OrdersController {
     }
 
     @PatchMapping("/{uuid}/delivered/{timestamp}")
-    public ResponseEntity<?> updateOrder(@PathVariable String uuid, @PathVariable LocalDateTime timestamp) {
+    public ResponseEntity<?> updateOrder(@PathVariable String uuid, @PathVariable String timestamp) {
         if (uuid == null || timestamp == null) {
             throw new IllegalArgumentException("String and timestamp cannot be null");
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(service.updateOrder(uuid, timestamp));
+        LocalDateTime deliveredDate = LocalDateTime.parse(timestamp);
+
+        return ResponseEntity.status(HttpStatus.OK).body(service.updateOrder(uuid, deliveredDate));
     }
 }
