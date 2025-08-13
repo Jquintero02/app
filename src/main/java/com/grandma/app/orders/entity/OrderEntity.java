@@ -84,7 +84,7 @@ public class OrderEntity {
     private LocalDateTime deliveredDate;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_ocument", referencedColumnName = "document", unique = true, insertable = false, updatable = false)
+    @JoinColumn(name = "client_document", referencedColumnName = "document", unique = true, insertable = false, updatable = false)
     private ClientEntity client;
 
     @OneToOne(fetch = FetchType.LAZY)
