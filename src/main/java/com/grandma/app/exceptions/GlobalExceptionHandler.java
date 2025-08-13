@@ -14,7 +14,30 @@ import java.util.HashMap;
 
 @Component
 @RestControllerAdvice
-public class GlobalException {
+public class GlobalExceptionHandler {
+    @ExceptionHandler(NotDifferentFieldException.class)
+    public ResponseEntity<ResponseDto> handleException(NotDifferentFieldException exception){
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(
+                new ResponseDto(
+                        HttpStatus.CONFLICT.toString(),
+                        LocalDateTime.now(),
+                        "No hay ningún campo diferente en el Request",
+                        exception.getMessage()
+                )
+        );
+    }
+
+    @ExceptionHandler(NullPointerException.class)
+    public ResponseEntity<ResponseDto> handleException(NullPointerException exception){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                new ResponseDto(
+                        HttpStatus.BAD_REQUEST.toString(),
+                        LocalDateTime.now(),
+                        "Error en los parametros",
+                        exception.getMessage()
+                )
+        );
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ResponseDto> handleException(MethodArgumentNotValidException exception){
