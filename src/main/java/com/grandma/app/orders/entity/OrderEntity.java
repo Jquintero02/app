@@ -1,4 +1,4 @@
-package com.grandma.app.orders.model;
+package com.grandma.app.orders.entity;
 
 import com.grandma.app.clients.entity.ClientEntity;
 import com.grandma.app.products.entity.ProductEntity;
@@ -11,11 +11,11 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "orders")
-public class OrderModel {
-    public OrderModel() {
+public class OrderEntity {
+    public OrderEntity() {
     }
 
-    public OrderModel(UUID uuid, LocalDateTime creationDateTime, String clientDocument, UUID productUuid, Integer quantity, String extraInformation, BigDecimal subTotal, BigDecimal tax, BigDecimal grandTotal, Boolean delivered, LocalDateTime deliveredDate, ClientEntity client, ProductEntity product) {
+    public OrderEntity(UUID uuid, LocalDateTime creationDateTime, String clientDocument, UUID productUuid, Integer quantity, String extraInformation, BigDecimal subTotal, BigDecimal tax, BigDecimal grandTotal, Boolean delivered, LocalDateTime deliveredDate, ClientEntity client, ProductEntity product) {
         this.uuid = uuid;
         this.creationDateTime = creationDateTime;
         this.clientDocument = clientDocument;

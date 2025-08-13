@@ -1,20 +1,19 @@
-package com.grandma.app.dto;
+package com.grandma.app.exceptions.dto;
 
 import java.time.LocalDateTime;
 
 public class ResponseDto {
-
-    public ResponseDto(String code, LocalDateTime timestamp, String message, String type) {
+    public ResponseDto(String code, LocalDateTime timestamp, String description, String exception) {
         this.code = code;
         this.timestamp = timestamp;
-        this.message = message;
-        this.type = type;
+        this.description = description;
+        this.exception = exception;
     }
 
     private String code;
     private LocalDateTime timestamp;
-    private String message;
-    private String type;
+    private String description;
+    private String exception;
 
     public String getCode() {
         return code;
@@ -32,19 +31,19 @@ public class ResponseDto {
         this.timestamp = timestamp;
     }
 
-    public String getMessage() {
-        return message;
+    public String getDescription() {
+        return description;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getType() {
-        return type;
+    public String getException() {
+        return exception;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setException(String exception) {
+        this.exception = exception;
     }
 }

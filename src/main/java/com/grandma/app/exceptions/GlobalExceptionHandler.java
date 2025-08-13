@@ -1,6 +1,6 @@
-package com.grandma.app.exception;
+package com.grandma.app.exceptions;
 
-import com.grandma.app.dto.ResponseDto;
+import com.grandma.app.exceptions.dto.ResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -21,20 +21,20 @@ public class GlobalExceptionHandler {
                 new ResponseDto(
                         HttpStatus.CONFLICT.toString(),
                         LocalDateTime.now(),
-                        "No hay ningún campo diferente en el Request",
-                        exception.getMessage()
+                        exception.getMessage(),
+                        "NotDifferentFieldException"
                 )
         );
     }
 
     @ExceptionHandler(NullPointerException.class)
     public ResponseEntity<ResponseDto> handleException(NullPointerException exception){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(
                 new ResponseDto(
-                        HttpStatus.BAD_REQUEST.toString(),
+                        HttpStatus.CONFLICT.toString(),
                         LocalDateTime.now(),
-                        "Error en los parametros",
-                        exception.getMessage()
+                        exception.getMessage(),
+                        "NullPointerException"
                 )
         );
     }
@@ -54,7 +54,7 @@ public class GlobalExceptionHandler {
                         HttpStatus.BAD_REQUEST.toString(),
                         LocalDateTime.now(),
                         errors.toString(),
-                        exception.getMessage()
+                        "MethodArgumentNotValidException"
                 )
         );
     }
@@ -62,10 +62,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ResponseDto> handleException(Exception exception){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                new ResponseDto(HttpStatus.BAD_REQUEST.toString(),
+                new ResponseDto(
+                        HttpStatus.BAD_REQUEST.toString(),
                         LocalDateTime.now(),
                         "Error general del servidor",
-                        exception.getMessage())
+                        "Exception"
+                )
         );
     }
 }

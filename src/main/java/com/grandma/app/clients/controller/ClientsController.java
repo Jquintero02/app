@@ -3,7 +3,7 @@ package com.grandma.app.clients.controller;
 import com.grandma.app.clients.dto.ClientDto;
 import com.grandma.app.clients.exception.ClientAlreadyExistsException;
 import com.grandma.app.clients.exception.ClientNotFoundException;
-import com.grandma.app.clients.service.ClientService;
+import com.grandma.app.clients.service.ClientsServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/clients")
-public class ClientController {
+public class ClientsController {
 
-    private final ClientService service;
+    private final ClientsServiceImpl service;
 
-    public ClientController(ClientService service){
+    public ClientsController(ClientsServiceImpl service) {
         this.service = service;
     }
 
@@ -60,7 +60,7 @@ public class ClientController {
 
     @PutMapping("/{document}")
     public ResponseEntity<?> updateClient(@PathVariable("document") String document,
-                                          @Valid @RequestBody ClientDto client) {
+            @Valid @RequestBody ClientDto client) {
         if (document == null || document.isEmpty()) {
             throw new IllegalArgumentException(String.format(
                     "Formato de documento inválido: %s", document));
@@ -89,5 +89,18 @@ public class ClientController {
         service.deleteClient(document);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    // BONUS TRACK
+    @GetMapping
+    public ResponseEntity<?> getOrderClients(@RequestParam(name = "orderBy", required = false) String orderBy,
+            @RequestParam(name = "direction", required = false) String direction) {
+        if (orderBy == null) {
+            orderBy = "DOCUMENT";
+        }
+        if (direction == null) {
+            direction = "ASC";
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(service.getOrderClients(orderBy, direction));
     }
 }

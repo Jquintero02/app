@@ -1,16 +1,20 @@
 package com.grandma.app.clients.repository;
 
-import com.grandma.app.clients.model.ClientModel;
+import com.grandma.app.clients.entity.ClientEntity;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
-public interface ClientRepository extends JpaRepository<ClientModel, Long> {
+public interface ClientsRepository extends JpaRepository<ClientEntity, UUID> {
     boolean existsByDocument(String document);
 
-    Optional<ClientModel> findByDocument(String document);
+    Optional<ClientEntity> findByDocument(String document);
 
-    void deleteByDocument(String document);
+    // BONUS TRACK: Ordenación dinámica usando Sort
+    List<ClientEntity> findAll(Sort sort);
 }

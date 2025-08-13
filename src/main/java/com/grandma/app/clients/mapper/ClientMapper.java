@@ -1,13 +1,16 @@
-package com.grandma.app.mapper;
+package com.grandma.app.clients.mapper;
 
-import com.grandma.app.dto.ClientDto;
-import com.grandma.app.model.ClientModel;
+import com.grandma.app.clients.dto.ClientDto;
+import com.grandma.app.clients.entity.ClientEntity;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class ClientMapper {
 
-    public ClientDto toDto(ClientModel client){
+    public ClientDto toDto(ClientEntity client){
         if(client == null){
             throw new NullPointerException("El cliente no puede ser nulo");
         }
@@ -23,19 +26,35 @@ public class ClientMapper {
         return clientDto;
     };
 
-    public ClientModel toModel(ClientDto client){
+    public ClientEntity toModel(ClientDto client){
         if(client == null){
             throw new NullPointerException("El cliente no puede ser nulo");
         }
 
-        ClientModel clientModel = new ClientModel();
+        ClientEntity clientEntity = new ClientEntity();
 
-        clientModel.setDocument(client.getDocument());
-        clientModel.setName(client.getName());
-        clientModel.setEmail(client.getEmail());
-        clientModel.setPhone(client.getPhone());
-        clientModel.setDeliveryAddress(client.getDeliveryAddress());
+        clientEntity.setDocument(client.getDocument());
+        clientEntity.setName(client.getName());
+        clientEntity.setEmail(client.getEmail());
+        clientEntity.setPhone(client.getPhone());
+        clientEntity.setDeliveryAddress(client.getDeliveryAddress());
 
-        return clientModel;
+        return clientEntity;
+    }
+
+    public List<ClientDto> toListDto(List<ClientEntity> entityList){
+        List<ClientDto> listDto = new ArrayList<>();
+
+        for (ClientEntity entity : entityList){
+            ClientDto clientDto = new ClientDto();
+            clientDto.setDocument(entity.getDocument());
+            clientDto.setName(entity.getName());
+            clientDto.setEmail(entity.getEmail());
+            clientDto.setPhone(entity.getPhone());
+            clientDto.setDeliveryAddress(entity.getDeliveryAddress());
+            listDto.add(clientDto);
+        }
+
+        return listDto;
     }
 }

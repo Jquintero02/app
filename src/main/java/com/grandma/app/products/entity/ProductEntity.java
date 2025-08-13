@@ -1,4 +1,4 @@
-package com.grandma.app.products.model;
+package com.grandma.app.products.entity;
 
 import com.grandma.app.products.enums.CategoryEnum;
 import jakarta.persistence.*;
@@ -12,8 +12,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "products")
-public class ProductModel {
-    public ProductModel() {
+public class ProductEntity {
+    public ProductEntity() {
     }
 
     @Id

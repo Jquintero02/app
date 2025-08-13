@@ -5,14 +5,17 @@ import com.grandma.app.clients.exception.ClientAlreadyExistsException;
 import com.grandma.app.clients.exception.ClientNotFoundException;
 import com.grandma.app.clients.mapper.ClientMapper;
 import com.grandma.app.clients.repository.ClientsRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class ClientsService {
+public class ClientsServiceImpl implements ClientsService {
     private final ClientsRepository repository;
     private final ClientMapper mapper;
 
-    public ClientsService(ClientsRepository repository, ClientMapper mapper){
+    public ClientsServiceImpl(ClientsRepository repository, ClientMapper mapper) {
         this.repository = repository;
         this.mapper = mapper;
     }
@@ -70,5 +73,26 @@ public class ClientsService {
                         String.format("Cliente con documento %s no encontrado", document)));
 
         repository.delete(clientToDelete);
+    }
+
+    // BONUS TRACK
+    public List<ClientDto> getOrderClients(String orderBy, String direction) {
+        String orderByField;
+        switch (orderBy == null ? "DOCUMENT" : orderBy.toUpperCase()) {
+            case "NAME":
+                orderByField = "name";
+                break;
+            case "ADDRESS":
+                orderByField = "deliveryAddress";
+                break;
+            case "DOCUMENT":
+            default:
+                orderByField = "document";
+                break;
+        }
+        Sort.Direction sortDirection = (direction == null || direction.equalsIgnoreCase("ASC")) ? Sort.Direction.ASC
+                : Sort.Direction.DESC;
+        Sort sort = Sort.by(sortDirection, orderByField);
+        return mapper.toListDto(repository.findAll(sort));
     }
 }

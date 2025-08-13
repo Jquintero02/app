@@ -1,4 +1,4 @@
-package com.grandma.app.clients.model;
+package com.grandma.app.clients.entity;
 
 import java.util.UUID;
 
@@ -9,8 +9,8 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "clients")
-public class ClientModel {
-    public ClientModel() {
+public class ClientEntity {
+    public ClientEntity() {
     }
 
     @Id
