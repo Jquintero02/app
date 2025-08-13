@@ -1,9 +1,6 @@
 package com.grandma.app.exceptions;
 
-public class NotDifferentFieldException extends RuntimeException{
-    private final String message;
-
+public class NotDifferentFieldException extends RuntimeException {
     public NotDifferentFieldException(String message) {
-        this.message = message;
     }
 }

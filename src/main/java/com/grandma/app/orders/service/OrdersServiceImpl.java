@@ -17,14 +17,14 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
-public class OrdersServiceImpl implements OrdersService{
+public class OrdersServiceImpl implements OrdersService {
     private final OrdersRepository ordersRepository;
     private final OrderMapper mapper;
     private final ClientsRepository clientsRepository;
     private final ProductsRepository productsRepository;
 
     public OrdersServiceImpl(OrdersRepository ordersRepository, OrderMapper mapper, ClientsRepository clientsRepository,
-                             ProductsRepository productsRepository) {
+            ProductsRepository productsRepository) {
         this.ordersRepository = ordersRepository;
         this.mapper = mapper;
         this.clientsRepository = clientsRepository;
@@ -37,7 +37,7 @@ public class OrdersServiceImpl implements OrdersService{
         }
 
         // verificar si existe el cliente
-        var existsClient = clientsRepository.findByDocument(order.getClientDocument())
+        clientsRepository.findByDocument(order.getClientDocument())
                 .orElseThrow(() -> new ClientNotFoundException("ClientNotFoundException"));
 
         // verificar si existe el producto
