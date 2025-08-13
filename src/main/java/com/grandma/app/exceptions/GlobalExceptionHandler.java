@@ -15,59 +15,52 @@ import java.util.HashMap;
 @Component
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(NotDifferentFieldException.class)
-    public ResponseEntity<ResponseDto> handleException(NotDifferentFieldException exception){
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(
-                new ResponseDto(
-                        HttpStatus.CONFLICT.toString(),
-                        LocalDateTime.now(),
-                        exception.getMessage(),
-                        "NotDifferentFieldException"
-                )
-        );
-    }
 
-    @ExceptionHandler(NullPointerException.class)
-    public ResponseEntity<ResponseDto> handleException(NullPointerException exception){
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(
-                new ResponseDto(
-                        HttpStatus.CONFLICT.toString(),
-                        LocalDateTime.now(),
-                        exception.getMessage(),
-                        "NullPointerException"
-                )
-        );
-    }
+        @ExceptionHandler(NotDifferentFieldException.class)
+        public ResponseEntity<ResponseDto> handleException(NotDifferentFieldException exception) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(
+                                new ResponseDto(
+                                                HttpStatus.CONFLICT.toString(),
+                                                LocalDateTime.now(),
+                                                exception.getMessage(),
+                                                "NotDifferentFieldException"));
+        }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ResponseDto> handleException(MethodArgumentNotValidException exception){
-        var errors = new HashMap<String, String>();
-        exception.getBindingResult().getFieldErrors().forEach(error -> {
-            var fieldName = ((FieldError) error).getField();
-            var errorMessage = error.getDefaultMessage();
+        @ExceptionHandler(NullPointerException.class)
+        public ResponseEntity<ResponseDto> handleException(NullPointerException exception) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(
+                                new ResponseDto(
+                                                HttpStatus.CONFLICT.toString(),
+                                                LocalDateTime.now(),
+                                                exception.getMessage(),
+                                                "NullPointerException"));
+        }
 
-            errors.put(fieldName, errorMessage);
-        });
+        @ExceptionHandler(MethodArgumentNotValidException.class)
+        public ResponseEntity<ResponseDto> handleException(MethodArgumentNotValidException exception) {
+                var errors = new HashMap<String, String>();
+                exception.getBindingResult().getFieldErrors().forEach(error -> {
+                        var fieldName = ((FieldError) error).getField();
+                        var errorMessage = error.getDefaultMessage();
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                new ResponseDto(
-                        HttpStatus.BAD_REQUEST.toString(),
-                        LocalDateTime.now(),
-                        errors.toString(),
-                        "MethodArgumentNotValidException"
-                )
-        );
-    }
+                        errors.put(fieldName, errorMessage);
+                });
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ResponseDto> handleException(Exception exception){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                new ResponseDto(
-                        HttpStatus.BAD_REQUEST.toString(),
-                        LocalDateTime.now(),
-                        "Error general del servidor",
-                        "Exception"
-                )
-        );
-    }
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                                new ResponseDto(
+                                                HttpStatus.BAD_REQUEST.toString(),
+                                                LocalDateTime.now(),
+                                                errors.toString(),
+                                                "MethodArgumentNotValidException"));
+        }
+
+        @ExceptionHandler(Exception.class)
+        public ResponseEntity<ResponseDto> handleException(Exception exception) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                                new ResponseDto(
+                                                HttpStatus.BAD_REQUEST.toString(),
+                                                LocalDateTime.now(),
+                                                "Error general del servidor",
+                                                exception.getMessage()));
+        }
 }
