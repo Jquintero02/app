@@ -7,10 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Repository
-public interface ClientsRepository extends JpaRepository<ClientEntity, UUID> {
+public interface ClientsRepository extends JpaRepository<ClientEntity, String> {
     boolean existsByDocument(String document);
 
     Optional<ClientEntity> findByDocument(String document);

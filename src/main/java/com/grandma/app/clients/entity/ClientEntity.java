@@ -1,7 +1,5 @@
 package com.grandma.app.clients.entity;
 
-import java.util.UUID;
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -15,7 +13,7 @@ public class ClientEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID uuid;
+    private String uuid;
 
     @Column(nullable = false, unique = true)
     @NotNull(message = "El documento es obligatorio")
@@ -43,11 +41,11 @@ public class ClientEntity {
     @Size(max = 500, message = "La direccion no puede tener más de 500 caracteres")
     private String deliveryAddress;
 
-    public UUID getUuid() {
+    public String getUuid() {
         return uuid;
     }
 
-    public void setUuid(UUID uuid) {
+    public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 
