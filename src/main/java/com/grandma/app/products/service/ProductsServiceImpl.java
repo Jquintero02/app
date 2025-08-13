@@ -27,9 +27,7 @@ public class ProductsServiceImpl implements ProductsService {
                     String.format("Producto con nombre %s ya existe", product.getFantasyName()));
         }
 
-        var savedProduct = repository.save(mapper.toEntity(product));
-
-        return mapper.toDto(savedProduct);
+        return mapper.toDto(repository.save(mapper.toEntity(product)));
     }
 
     public ProductDto getProduct(UUID uuid) {
@@ -48,7 +46,7 @@ public class ProductsServiceImpl implements ProductsService {
                 || !existingProduct.getCategory().equals(product.getCategory())
                 || !existingProduct.getDescription().equals(product.getDescription())
                 || !existingProduct.getPrice().equals(product.getPrice())
-                || !existingProduct.getAvailable().equals(product.isAvailable());
+                || !existingProduct.getAvailable() == product.isAvailable();
 
         if (!hasChanges) {
             throw new IllegalArgumentException("No hay ningún campo diferente en el Request.");
