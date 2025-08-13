@@ -32,14 +32,12 @@ public class ClientsController {
                     "Datos del cliente inválidos o incompletos: %s", client));
         }
 
-        var createdClient = service.createClient(client);
-
-        if (createdClient == null) {
+        if (service.existsClient(client.getDocument())) {
             throw new ClientAlreadyExistsException(
                     String.format("Cliente con documento %s ya existe", client.getDocument()));
         }
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdClient);
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.createClient(client));
     }
 
     @GetMapping("/{document}")

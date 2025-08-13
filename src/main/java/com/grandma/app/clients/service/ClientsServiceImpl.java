@@ -1,7 +1,6 @@
 package com.grandma.app.clients.service;
 
 import com.grandma.app.clients.dto.ClientDto;
-import com.grandma.app.clients.exception.ClientAlreadyExistsException;
 import com.grandma.app.clients.exception.ClientNotFoundException;
 import com.grandma.app.clients.mapper.ClientMapper;
 import com.grandma.app.clients.repository.ClientsRepository;
@@ -21,14 +20,7 @@ public class ClientsServiceImpl implements ClientsService {
     }
 
     public ClientDto createClient(ClientDto client) {
-        if (repository.existsByDocument(client.getDocument())) {
-            throw new ClientAlreadyExistsException(
-                    String.format("Cliente con documento %s ya existe", client.getDocument()));
-        }
-
-        var savedClient = repository.save(mapper.toModel(client));
-
-        return mapper.toDto(savedClient);
+        return mapper.toDto(repository.save(mapper.toModel(client)));
     }
 
     public ClientDto getClient(String document) {
@@ -73,6 +65,10 @@ public class ClientsServiceImpl implements ClientsService {
                         String.format("Cliente con documento %s no encontrado", document)));
 
         repository.delete(clientToDelete);
+    }
+
+    public boolean existsClient(String document) {
+        return repository.existsByDocument(document);
     }
 
     // BONUS TRACK
