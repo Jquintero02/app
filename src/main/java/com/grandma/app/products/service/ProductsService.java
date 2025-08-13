@@ -5,7 +5,7 @@ import com.grandma.app.products.dto.ProductDto;
 import java.util.List;
 import java.util.UUID;
 
-public interface ProductService {
+public interface ProductsService {
     ProductDto createProduct(ProductDto product);
 
     ProductDto getProduct(UUID uuid);
