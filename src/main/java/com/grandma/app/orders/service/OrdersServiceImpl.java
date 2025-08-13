@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Service
 public class OrdersServiceImpl implements OrdersService {
@@ -68,13 +67,14 @@ public class OrdersServiceImpl implements OrdersService {
         return ordersRepository.save(orderEntity);
     }
 
-    public OrderEntity updateOrder(UUID uuid, LocalDateTime timestamp) {
+    public OrderEntity updateOrder(String uuid, LocalDateTime timestamp) {
         if (!ordersRepository.existsByUuid(uuid)) {
-            throw new OrderNotFoundException("Order with UUID " + uuid + " does not exist");
+            throw new OrderNotFoundException("Order with String " + uuid + " does not exist");
         }
 
         OrderEntity order = ordersRepository.findById(uuid)
-                .orElseThrow(() -> new OrderNotFoundException(String.format("Order with UUID %s not found", uuid)));
+                .orElseThrow(() -> new OrderNotFoundException(String.format("Order with String %s not found", uuid)));
+
         order.setDelivered(true);
         order.setDeliveredDate(timestamp);
 

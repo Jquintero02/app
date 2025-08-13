@@ -1,12 +1,10 @@
 package com.grandma.app.orders.dto;
 
-import java.util.UUID;
-
 public class OrderDto {
     public OrderDto() {
     }
 
-    public OrderDto(String clientDocument, UUID productUuid, Integer quantity, String extraInformation) {
+    public OrderDto(String clientDocument, String productUuid, Integer quantity, String extraInformation) {
         this.clientDocument = clientDocument;
         this.productUuid = productUuid;
         this.quantity = quantity;
@@ -14,7 +12,7 @@ public class OrderDto {
     }
 
     private String clientDocument;
-    private UUID productUuid;
+    private String productUuid;
     private Integer quantity;
     private String extraInformation;
 
@@ -26,11 +24,11 @@ public class OrderDto {
         this.clientDocument = clientDocument;
     }
 
-    public UUID getProductUuid() {
+    public String getProductUuid() {
         return productUuid;
     }
 
-    public void setProductUuid(UUID productUuid) {
+    public void setProductUuid(String productUuid) {
         this.productUuid = productUuid;
     }
 

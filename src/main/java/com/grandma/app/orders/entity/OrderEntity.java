@@ -7,7 +7,6 @@ import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Table(name = "orders")
@@ -15,7 +14,7 @@ public class OrderEntity {
     public OrderEntity() {
     }
 
-    public OrderEntity(UUID uuid, LocalDateTime creationDateTime, String clientDocument, UUID productUuid,
+    public OrderEntity(String uuid, LocalDateTime creationDateTime, String clientDocument, String productUuid,
             Integer quantity, String extraInformation, BigDecimal subTotal, BigDecimal tax, BigDecimal grandTotal,
             Boolean delivered, LocalDateTime deliveredDate, ClientEntity client, ProductEntity product) {
         this.uuid = uuid;
@@ -35,7 +34,7 @@ public class OrderEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID uuid;
+    private String uuid;
 
     @Column(name = "creation_date_time", nullable = false)
     @NotNull(message = "La fecha del cliente no puede ser vacio")
@@ -48,7 +47,7 @@ public class OrderEntity {
 
     @Column(name = "product_uuid", nullable = false, unique = true)
     @NotNull(message = "El producto no puede ser vacio")
-    private UUID productUuid;
+    private String productUuid;
 
     @Column(nullable = false)
     @NotNull(message = "El documento del cliente no puede ser vacio")
@@ -92,11 +91,11 @@ public class OrderEntity {
     @JoinColumn(name = "product_uuid", referencedColumnName = "uuid", unique = true, insertable = false, updatable = false)
     private ProductEntity product;
 
-    public UUID getUuid() {
+    public String getUuid() {
         return uuid;
     }
 
-    public void setUuid(UUID uuid) {
+    public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 
@@ -116,11 +115,11 @@ public class OrderEntity {
         this.clientDocument = clientDocument;
     }
 
-    public UUID getProductUuid() {
+    public String getProductUuid() {
         return productUuid;
     }
 
-    public void setProductUuid(UUID productUuid) {
+    public void setProductUuid(String productUuid) {
         this.productUuid = productUuid;
     }
 

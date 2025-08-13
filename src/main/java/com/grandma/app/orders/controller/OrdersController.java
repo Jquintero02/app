@@ -1,13 +1,12 @@
 package com.grandma.app.orders.controller;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,10 +34,10 @@ public class OrdersController {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.createOrder(order));
     }
 
-    @PutMapping("/{uuid}/delivered/{timestamp}")
-    public ResponseEntity<?> updateOrder(@PathVariable UUID uuid, @PathVariable LocalDateTime timestamp) {
+    @PatchMapping("/{uuid}/delivered/{timestamp}")
+    public ResponseEntity<?> updateOrder(@PathVariable String uuid, @PathVariable LocalDateTime timestamp) {
         if (uuid == null || timestamp == null) {
-            throw new IllegalArgumentException("UUID and timestamp cannot be null");
+            throw new IllegalArgumentException("String and timestamp cannot be null");
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(service.updateOrder(uuid, timestamp));
