@@ -20,7 +20,7 @@ public class ProductEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID uuid;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "fantasy_name", nullable = false, unique = true)
     @NotNull(message = "El nombre no puede ser vacio")
     @Size(max = 255, message = "El nombre no puede tener más de 255 caracteres")
     private String fantasyName;
@@ -42,7 +42,7 @@ public class ProductEntity {
 
     @Column(nullable = false)
     @NotNull(message = "El estado no puede ser vacio")
-    private Boolean available;
+    private boolean available;
 
     public UUID getUuid() {
         return uuid;
@@ -84,11 +84,11 @@ public class ProductEntity {
         this.price = price;
     }
 
-    public Boolean getAvailable() {
+    public boolean getAvailable() {
         return available;
     }
 
-    public void setAvailable(Boolean available) {
+    public void setAvailable(boolean available) {
         this.available = available;
     }
 }
