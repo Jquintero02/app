@@ -1,7 +1,5 @@
 package com.grandma.app.orders.entity;
 
-import com.grandma.app.clients.entity.ClientEntity;
-import com.grandma.app.products.entity.ProductEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Data;

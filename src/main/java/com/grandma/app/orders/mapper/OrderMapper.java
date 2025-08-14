@@ -1,6 +1,5 @@
 package com.grandma.app.orders.mapper;
 
-import com.grandma.app.clients.entity.ClientEntity;
 import com.grandma.app.orders.dto.OrderDto;
 import com.grandma.app.orders.entity.OrderEntity;
 import org.springframework.stereotype.Component;
