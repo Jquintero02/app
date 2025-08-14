@@ -1,8 +1,6 @@
 package com.grandma.app.products.controller;
 
 import com.grandma.app.products.dto.ProductDto;
-import com.grandma.app.products.exception.ProductAlreadyExistsException;
-import com.grandma.app.products.exception.ProductNotFoundException;
 import com.grandma.app.products.service.ProductsService;
 import com.grandma.app.products.service.ProductsServiceImpl;
 import jakarta.validation.Valid;

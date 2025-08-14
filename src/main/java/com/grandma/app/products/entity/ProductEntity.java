@@ -2,10 +2,6 @@ package com.grandma.app.products.entity;
 
 import com.grandma.app.products.enums.CategoryEnum;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Digits;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.math.BigDecimal;
