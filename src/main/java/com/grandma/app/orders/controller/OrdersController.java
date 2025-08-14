@@ -28,13 +28,11 @@ public class OrdersController {
     }
 
     @PatchMapping("/{uuid}/delivered/{timestamp}")
-    public ResponseEntity<?> updateOrder(@PathVariable String uuid, @PathVariable String timestamp) {
+    public ResponseEntity<?> updateOrder(@PathVariable String uuid, @PathVariable LocalDateTime timestamp) {
         if (uuid == null || timestamp == null) {
             throw new IllegalArgumentException("String and timestamp cannot be null");
         }
 
-        LocalDateTime deliveredDate = LocalDateTime.parse(timestamp);
-
-        return ResponseEntity.status(HttpStatus.OK).body(service.updateOrder(uuid, deliveredDate));
+        return ResponseEntity.status(HttpStatus.OK).body(service.updateOrder(uuid, timestamp));
     }
 }
