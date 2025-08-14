@@ -3,6 +3,8 @@ package com.grandma.app.orders.controller;
 import com.grandma.app.orders.dto.OrderDto;
 import com.grandma.app.orders.service.OrdersServiceImpl;
 import jakarta.validation.Valid;
+
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,13 +31,11 @@ public class OrdersController {
 
     @PatchMapping("/{uuid}/delivered/{timestamp}")
     public ResponseEntity<?> updateOrder(@PathVariable("uuid") String uuid,
-            @PathVariable("timestamp") LocalDateTime timestamp) {
+            @PathVariable("timestamp") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime timestamp) {
         if (uuid == null || timestamp == null) {
             throw new IllegalArgumentException("String and timestamp cannot be null");
         }
 
-        LocalDateTime deliveredDate = LocalDateTime.parse(timestamp.toString());
-
-        return ResponseEntity.status(HttpStatus.OK).body(service.updateOrder(uuid, deliveredDate));
+        return ResponseEntity.status(HttpStatus.OK).body(service.updateOrder(uuid, timestamp));
     }
 }

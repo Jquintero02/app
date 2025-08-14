@@ -35,28 +35,29 @@ public class OrdersServiceImpl implements OrdersService {
             throw new IllegalArgumentException("Order cannot be null");
         }
 
-        // verificar si existe el cliente
-        clientsRepository.findByDocument(order.getClientDocument())
+        var foundClient = clientsRepository.findByDocument(order.getClientDocument())
                 .orElseThrow(() -> new ClientNotFoundException("ClientNotFoundException"));
 
-        // verificar si existe el producto
         var existsProduct = productsRepository.findByUuid(order.getProductUuid())
                 .orElseThrow(() -> new ProductNotFoundException("ProductNotFoundException"));
 
         OrderEntity orderEntity = mapper.toModel(order);
 
+        orderEntity.setClientUuid(foundClient.getUuid());
+
         var price = existsProduct.getPrice();
 
-        // Calculate subtotal
+        // Calculate subtotal: convertir a privado
         BigDecimal subTotal = price.multiply(BigDecimal.valueOf(orderEntity.getQuantity()));
         subTotal = subTotal.setScale(2, RoundingMode.HALF_UP);
 
-        // Calculate tax (19% IVA)
+        // Calculate tax (19% IVA): convertir a privado
         BigDecimal tax = subTotal.multiply(new BigDecimal("0.19")).setScale(2, RoundingMode.HALF_UP);
 
-        // Calculate grand total
+        // Calculate grand total: convertir a privado
         BigDecimal grandTotal = subTotal.add(tax).setScale(2, RoundingMode.HALF_UP);
 
+        // mapper to setData
         orderEntity.setCreationDateTime(LocalDateTime.now());
         orderEntity.setSubTotal(subTotal);
         orderEntity.setTax(tax);

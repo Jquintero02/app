@@ -1,37 +1,36 @@
 package com.grandma.app.orders.mapper;
 
+import com.grandma.app.clients.entity.ClientEntity;
 import com.grandma.app.orders.dto.OrderDto;
 import com.grandma.app.orders.entity.OrderEntity;
 import org.springframework.stereotype.Component;
 
 @Component
 public class OrderMapper {
-    public OrderDto toDto(OrderEntity order) {
-        if (order == null) {
+    public OrderDto toDto(OrderEntity orderEntity) {
+        if (orderEntity == null) {
             throw new NullPointerException("NullPointerException");
         }
 
         OrderDto orderDto = new OrderDto();
 
-        orderDto.setClientDocument(order.getClientDocument());
-        orderDto.setProductUuid(order.getProductUuid());
-        orderDto.setQuantity(order.getQuantity());
-        orderDto.setExtraInformation(order.getExtraInformation());
+        orderDto.setProductUuid(orderEntity.getProductUuid());
+        orderDto.setQuantity(orderEntity.getQuantity());
+        orderDto.setExtraInformation(orderEntity.getExtraInformation());
 
         return orderDto;
     }
 
-    public OrderEntity toModel(OrderDto order) {
-        if (order == null) {
+    public OrderEntity toModel(OrderDto orderDto) {
+        if (orderDto == null) {
             throw new NullPointerException("NullPointerException");
         }
 
         OrderEntity orderEntity = new OrderEntity();
 
-        orderEntity.setClientDocument(order.getClientDocument());
-        orderEntity.setProductUuid(order.getProductUuid());
-        orderEntity.setQuantity(order.getQuantity());
-        orderEntity.setExtraInformation(order.getExtraInformation());
+        orderEntity.setProductUuid(orderDto.getProductUuid());
+        orderEntity.setQuantity(orderDto.getQuantity());
+        orderEntity.setExtraInformation(orderDto.getExtraInformation());
 
         return orderEntity;
     }

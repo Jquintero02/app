@@ -4,15 +4,15 @@ import com.grandma.app.clients.entity.ClientEntity;
 import com.grandma.app.products.entity.ProductEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@Data
 @Entity
 @Table(name = "orders")
 public class OrderEntity {
-    public OrderEntity() {
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -22,13 +22,15 @@ public class OrderEntity {
     @NotNull(message = "La fecha del cliente no puede ser vacio")
     private LocalDateTime creationDateTime;
 
-    @Column(name = "client_document", nullable = false, unique = true)
+    @Column(name = "client_uuid", nullable = false, unique = true)
     @NotNull(message = "El documento del cliente no puede ser vacio")
     @Size(max = 20, message = "El documento no puede tener más de 20 caracteres")
-    private String clientDocument;
+    @JoinColumn(name = "client_uuid", referencedColumnName = "uuid")
+    private String clientUuid;
 
     @Column(name = "product_uuid", nullable = false, unique = true)
     @NotNull(message = "El producto no puede ser vacio")
+    @JoinColumn(name = "product_uuid", referencedColumnName = "uuid")
     private String productUuid;
 
     @Column(nullable = false)
@@ -65,115 +67,4 @@ public class OrderEntity {
     @Column(name = "delivered_date", nullable = true)
     private LocalDateTime deliveredDate;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_document", referencedColumnName = "document", unique = true, insertable = false, updatable = false)
-    private ClientEntity client;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_uuid", referencedColumnName = "uuid", unique = true, insertable = false, updatable = false)
-    private ProductEntity product;
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
-    public LocalDateTime getCreationDateTime() {
-        return creationDateTime;
-    }
-
-    public void setCreationDateTime(LocalDateTime creationDateTime) {
-        this.creationDateTime = creationDateTime;
-    }
-
-    public String getClientDocument() {
-        return clientDocument;
-    }
-
-    public void setClientDocument(String clientDocument) {
-        this.clientDocument = clientDocument;
-    }
-
-    public String getProductUuid() {
-        return productUuid;
-    }
-
-    public void setProductUuid(String productUuid) {
-        this.productUuid = productUuid;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public String getExtraInformation() {
-        return extraInformation;
-    }
-
-    public void setExtraInformation(String extraInformation) {
-        this.extraInformation = extraInformation;
-    }
-
-    public BigDecimal getSubTotal() {
-        return subTotal;
-    }
-
-    public void setSubTotal(BigDecimal subTotal) {
-        this.subTotal = subTotal;
-    }
-
-    public BigDecimal getTax() {
-        return tax;
-    }
-
-    public void setTax(BigDecimal tax) {
-        this.tax = tax;
-    }
-
-    public BigDecimal getGrandTotal() {
-        return grandTotal;
-    }
-
-    public void setGrandTotal(BigDecimal grandTotal) {
-        this.grandTotal = grandTotal;
-    }
-
-    public Boolean getDelivered() {
-        return delivered;
-    }
-
-    public void setDelivered(Boolean delivered) {
-        this.delivered = delivered;
-    }
-
-    public LocalDateTime getDeliveredDate() {
-        return deliveredDate;
-    }
-
-    public void setDeliveredDate(LocalDateTime deliveredDate) {
-        this.deliveredDate = deliveredDate;
-    }
-
-    public ClientEntity getClient() {
-        return client;
-    }
-
-    public void setClient(ClientEntity client) {
-        this.client = client;
-    }
-
-    public ProductEntity getProduct() {
-        return product;
-    }
-
-    public void setProduct(ProductEntity product) {
-        this.product = product;
-    }
 }

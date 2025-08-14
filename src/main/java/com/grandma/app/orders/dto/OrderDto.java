@@ -4,13 +4,6 @@ public class OrderDto {
     public OrderDto() {
     }
 
-    public OrderDto(String clientDocument, String productUuid, Integer quantity, String extraInformation) {
-        this.clientDocument = clientDocument;
-        this.productUuid = productUuid;
-        this.quantity = quantity;
-        this.extraInformation = extraInformation;
-    }
-
     private String clientDocument;
     private String productUuid;
     private Integer quantity;
