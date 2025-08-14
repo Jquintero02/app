@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class OrderMapper {
-    public OrderDto toDto(OrderEntity orderEntity) {
+    public OrderDto orderEntityToOrderDto(OrderEntity orderEntity) {
         if (orderEntity == null) {
             throw new NullPointerException("NullPointerException");
         }
@@ -20,7 +20,7 @@ public class OrderMapper {
         return orderDto;
     }
 
-    public OrderEntity toModel(OrderDto orderDto) {
+    public OrderEntity orderDtoToOrderEntity(OrderDto orderDto) {
         if (orderDto == null) {
             throw new NullPointerException("NullPointerException");
         }

@@ -18,30 +18,27 @@ import java.time.LocalDateTime;
 @Service
 public class OrdersServiceImpl implements OrdersService {
     private final OrdersRepository ordersRepository;
-    private final OrderMapper mapper;
+    private final OrderMapper orderMapper;
     private final ClientsRepository clientsRepository;
     private final ProductsRepository productsRepository;
 
-    public OrdersServiceImpl(OrdersRepository ordersRepository, OrderMapper mapper, ClientsRepository clientsRepository,
+    public OrdersServiceImpl(OrdersRepository ordersRepository, OrderMapper orderMapper,
+            ClientsRepository clientsRepository,
             ProductsRepository productsRepository) {
         this.ordersRepository = ordersRepository;
-        this.mapper = mapper;
+        this.orderMapper = orderMapper;
         this.clientsRepository = clientsRepository;
         this.productsRepository = productsRepository;
     }
 
-    public OrderEntity createOrder(OrderDto order) {
-        if (order == null) {
-            throw new IllegalArgumentException("Order cannot be null");
-        }
-
-        var foundClient = clientsRepository.findByDocument(order.getClientDocument())
+    public OrderEntity createOrder(OrderDto orderDto) {
+        var foundClient = clientsRepository.findByDocument(orderDto.getClientDocument())
                 .orElseThrow(() -> new ClientNotFoundException("ClientNotFoundException"));
 
-        var existsProduct = productsRepository.findByUuid(order.getProductUuid())
+        var existsProduct = productsRepository.findByUuid(orderDto.getProductUuid())
                 .orElseThrow(() -> new ProductNotFoundException("ProductNotFoundException"));
 
-        OrderEntity orderEntity = mapper.toModel(order);
+        OrderEntity orderEntity = orderMapper.orderDtoToOrderEntity(orderDto);
 
         orderEntity.setClientUuid(foundClient.getUuid());
 

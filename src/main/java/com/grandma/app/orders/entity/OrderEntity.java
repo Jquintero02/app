@@ -17,28 +17,20 @@ public class OrderEntity {
     private String uuid;
 
     @Column(name = "creation_date_time", nullable = false)
-    @NotNull(message = "La fecha del cliente no puede ser vacio")
     private LocalDateTime creationDateTime;
 
     @Column(name = "client_uuid", nullable = false, unique = true)
-    @NotNull(message = "El documento del cliente no puede ser vacio")
-    @Size(max = 20, message = "El documento no puede tener más de 20 caracteres")
     @JoinColumn(name = "client_uuid", referencedColumnName = "uuid")
     private String clientUuid;
 
     @Column(name = "product_uuid", nullable = false, unique = true)
-    @NotNull(message = "El producto no puede ser vacio")
     @JoinColumn(name = "product_uuid", referencedColumnName = "uuid")
     private String productUuid;
 
     @Column(nullable = false)
-    @NotNull(message = "El documento del cliente no puede ser vacio")
-    @Min(value = 1, message = "La cantidad debe ser mayor a 0")
-    @Max(value = 100, message = "La cantidad no debe ser mayor a 0")
     private Integer quantity;
 
     @Column(name = "extra_information", nullable = true)
-    @Size(max = 511, message = "La información extra no debe ser mayor a 511 caracteres")
     private String extraInformation;
 
     @Column(name = "sub_total", nullable = false, columnDefinition = "DECIMAL(10,2)")

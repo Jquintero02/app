@@ -6,7 +6,7 @@ import com.grandma.app.orders.entity.OrderEntity;
 import java.time.LocalDateTime;
 
 public interface OrdersService {
-    OrderEntity createOrder(OrderDto order);
+    OrderEntity createOrder(OrderDto orderDto);
 
     OrderEntity updateOrder(String uuid, LocalDateTime timestamp);
 }
