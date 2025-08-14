@@ -2,7 +2,6 @@ package com.grandma.app.products.controller;
 
 import com.grandma.app.products.dto.ProductDto;
 import com.grandma.app.products.service.ProductsService;
-import com.grandma.app.products.service.ProductsServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class ProductsController {
     private final ProductsService productsService;
 
-    public ProductsController(ProductsServiceImpl productsService) {
+    public ProductsController(ProductsService productsService) {
         this.productsService = productsService;
     }
 
