@@ -32,30 +32,30 @@ public class ClientsServiceImpl implements ClientsService {
                         String.format("Cliente con documento %s no encontrado", document)));
     }
 
-    public void updateClient(String document, ClientDto client) {
+    public void updateClient(String document, ClientDto clientDto) {
         var existingClient = clientsPepository.findByDocument(document)
                 .orElseThrow(() -> new ClientNotFoundException(
                         String.format("Cliente con documento %s no encontrado", document)));
 
-        if (!client.getDocument().equals(document)) {
+        if (!clientDto.getDocument().equals(document)) {
             throw new IllegalArgumentException(String.format(
                     "No se puede modificar el documento de identidad %s", document));
         }
 
-        Boolean hasChanges = !existingClient.getName().equals(client.getName())
-                || !existingClient.getEmail().equals(client.getEmail())
-                || !existingClient.getPhone().equals(client.getPhone())
-                || !existingClient.getDeliveryAddress().equals(client.getDeliveryAddress());
+        Boolean hasChanges = !existingClient.getName().equals(clientDto.getName())
+                || !existingClient.getEmail().equals(clientDto.getEmail())
+                || !existingClient.getPhone().equals(clientDto.getPhone())
+                || !existingClient.getDeliveryAddress().equals(clientDto.getDeliveryAddress());
 
         if (!hasChanges) {
             throw new IllegalArgumentException("No hay ningún campo diferente en el Request.");
         }
 
-        existingClient.setDocument(client.getDocument());
-        existingClient.setName(client.getName());
-        existingClient.setEmail(client.getEmail());
-        existingClient.setPhone(client.getPhone());
-        existingClient.setDeliveryAddress(client.getDeliveryAddress());
+        existingClient.setDocument(clientDto.getDocument());
+        existingClient.setName(clientDto.getName());
+        existingClient.setEmail(clientDto.getEmail());
+        existingClient.setPhone(clientDto.getPhone());
+        existingClient.setDeliveryAddress(clientDto.getDeliveryAddress());
 
         clientsPepository.save(existingClient);
     }
@@ -67,10 +67,6 @@ public class ClientsServiceImpl implements ClientsService {
                         String.format("Cliente con documento %s no encontrado", document)));
 
         clientsPepository.delete(clientToDelete);
-    }
-
-    public Boolean existsClient(String document) {
-        return clientsPepository.existsByDocument(document);
     }
 
     // BONUS TRACK
@@ -91,6 +87,6 @@ public class ClientsServiceImpl implements ClientsService {
         Sort.Direction sortDirection = (direction == null || direction.equalsIgnoreCase("ASC")) ? Sort.Direction.ASC
                 : Sort.Direction.DESC;
         Sort sort = Sort.by(sortDirection, orderByField);
-        return clientMapper.toListDto(clientsPepository.findAll(sort));
+        return clientMapper.listClientEntityToListClientDto(clientsPepository.findAll(sort));
     }
 }

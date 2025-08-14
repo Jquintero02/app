@@ -42,16 +42,19 @@ public class ClientMapper {
         return clientEntity;
     }
 
-    public List<ClientDto> toListDto(List<ClientEntity> entityList) {
+    public List<ClientDto> listClientEntityToListClientDto(List<ClientEntity> entityList) {
         List<ClientDto> listDto = new ArrayList<>();
 
         for (ClientEntity entity : entityList) {
+
             ClientDto clientDto = new ClientDto();
+
             clientDto.setDocument(entity.getDocument());
             clientDto.setName(entity.getName());
             clientDto.setEmail(entity.getEmail());
             clientDto.setPhone(entity.getPhone());
             clientDto.setDeliveryAddress(entity.getDeliveryAddress());
+
             listDto.add(clientDto);
         }
 

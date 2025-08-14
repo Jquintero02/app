@@ -10,8 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface ClientsRepository extends JpaRepository<ClientEntity, String> {
-    Boolean existsByDocument(String document);
-
     Optional<ClientEntity> findByDocument(String document);
 
     // BONUS TRACK: Ordenación dinámica usando Sort
