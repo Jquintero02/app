@@ -33,6 +33,8 @@ public class OrdersController {
             throw new IllegalArgumentException("String and timestamp cannot be null");
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(service.updateOrder(uuid, timestamp));
+        LocalDateTime deliveredDate = LocalDateTime.parse(timestamp.toString());
+
+        return ResponseEntity.status(HttpStatus.OK).body(service.updateOrder(uuid, deliveredDate));
     }
 }
