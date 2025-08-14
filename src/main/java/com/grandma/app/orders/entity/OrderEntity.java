@@ -14,24 +14,6 @@ public class OrderEntity {
     public OrderEntity() {
     }
 
-    public OrderEntity(String uuid, LocalDateTime creationDateTime, String clientDocument, String productUuid,
-            Integer quantity, String extraInformation, BigDecimal subTotal, BigDecimal tax, BigDecimal grandTotal,
-            Boolean delivered, LocalDateTime deliveredDate, ClientEntity client, ProductEntity product) {
-        this.uuid = uuid;
-        this.creationDateTime = creationDateTime;
-        this.clientDocument = clientDocument;
-        this.productUuid = productUuid;
-        this.quantity = quantity;
-        this.extraInformation = extraInformation;
-        this.subTotal = subTotal;
-        this.tax = tax;
-        this.grandTotal = grandTotal;
-        this.delivered = delivered;
-        this.deliveredDate = deliveredDate;
-        this.client = client;
-        this.product = product;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String uuid;
