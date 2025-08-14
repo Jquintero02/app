@@ -4,6 +4,7 @@ import com.grandma.app.clients.dto.ClientDto;
 import com.grandma.app.clients.exception.ClientNotFoundException;
 import com.grandma.app.clients.mapper.ClientMapper;
 import com.grandma.app.clients.repository.ClientsRepository;
+
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -11,27 +12,28 @@ import java.util.List;
 
 @Service
 public class ClientsServiceImpl implements ClientsService {
-    private final ClientsRepository repository;
-    private final ClientMapper mapper;
+    private final ClientsRepository clientsPepository;
+    private final ClientMapper clientMapper;
 
-    public ClientsServiceImpl(ClientsRepository repository, ClientMapper mapper) {
-        this.repository = repository;
-        this.mapper = mapper;
+    public ClientsServiceImpl(ClientsRepository clientsPepository, ClientMapper clientMapper) {
+        this.clientsPepository = clientsPepository;
+        this.clientMapper = clientMapper;
     }
 
-    public ClientDto createClient(ClientDto client) {
-        return mapper.toDto(repository.save(mapper.toModel(client)));
+    public ClientDto createClient(ClientDto clientDto) {
+        return clientMapper
+                .clientEntityToClientDto(clientsPepository.save(clientMapper.clientDtoToClientEntity(clientDto)));
     }
 
     public ClientDto getClient(String document) {
-        return repository.findByDocument(document)
-                .map(mapper::toDto)
+        return clientsPepository.findByDocument(document)
+                .map(clientMapper::clientEntityToClientDto)
                 .orElseThrow(() -> new ClientNotFoundException(
                         String.format("Cliente con documento %s no encontrado", document)));
     }
 
     public void updateClient(String document, ClientDto client) {
-        var existingClient = repository.findByDocument(document)
+        var existingClient = clientsPepository.findByDocument(document)
                 .orElseThrow(() -> new ClientNotFoundException(
                         String.format("Cliente con documento %s no encontrado", document)));
 
@@ -40,7 +42,7 @@ public class ClientsServiceImpl implements ClientsService {
                     "No se puede modificar el documento de identidad %s", document));
         }
 
-        boolean hasChanges = !existingClient.getName().equals(client.getName())
+        Boolean hasChanges = !existingClient.getName().equals(client.getName())
                 || !existingClient.getEmail().equals(client.getEmail())
                 || !existingClient.getPhone().equals(client.getPhone())
                 || !existingClient.getDeliveryAddress().equals(client.getDeliveryAddress());
@@ -55,20 +57,20 @@ public class ClientsServiceImpl implements ClientsService {
         existingClient.setPhone(client.getPhone());
         existingClient.setDeliveryAddress(client.getDeliveryAddress());
 
-        repository.save(existingClient);
+        clientsPepository.save(existingClient);
     }
 
     public void deleteClient(String document) {
-        var clientToDelete = repository
+        var clientToDelete = clientsPepository
                 .findByDocument(document)
                 .orElseThrow(() -> new ClientNotFoundException(
                         String.format("Cliente con documento %s no encontrado", document)));
 
-        repository.delete(clientToDelete);
+        clientsPepository.delete(clientToDelete);
     }
 
-    public boolean existsClient(String document) {
-        return repository.existsByDocument(document);
+    public Boolean existsClient(String document) {
+        return clientsPepository.existsByDocument(document);
     }
 
     // BONUS TRACK
@@ -89,6 +91,6 @@ public class ClientsServiceImpl implements ClientsService {
         Sort.Direction sortDirection = (direction == null || direction.equalsIgnoreCase("ASC")) ? Sort.Direction.ASC
                 : Sort.Direction.DESC;
         Sort sort = Sort.by(sortDirection, orderByField);
-        return mapper.toListDto(repository.findAll(sort));
+        return clientMapper.toListDto(clientsPepository.findAll(sort));
     }
 }

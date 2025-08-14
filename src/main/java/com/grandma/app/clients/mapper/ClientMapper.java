@@ -10,42 +10,42 @@ import java.util.List;
 @Component
 public class ClientMapper {
 
-    public ClientDto toDto(ClientEntity client){
-        if(client == null){
+    public ClientDto clientEntityToClientDto(ClientEntity clientEntity) {
+        if (clientEntity == null) {
             throw new NullPointerException("El cliente no puede ser nulo");
         }
 
         ClientDto clientDto = new ClientDto();
 
-        clientDto.setDocument(client.getDocument());
-        clientDto.setName(client.getName());
-        clientDto.setEmail(client.getEmail());
-        clientDto.setPhone(client.getPhone());
-        clientDto.setDeliveryAddress(client.getDeliveryAddress());
+        clientDto.setDocument(clientEntity.getDocument());
+        clientDto.setName(clientEntity.getName());
+        clientDto.setEmail(clientEntity.getEmail());
+        clientDto.setPhone(clientEntity.getPhone());
+        clientDto.setDeliveryAddress(clientEntity.getDeliveryAddress());
 
         return clientDto;
     };
 
-    public ClientEntity toModel(ClientDto client){
-        if(client == null){
+    public ClientEntity clientDtoToClientEntity(ClientDto clientDto) {
+        if (clientDto == null) {
             throw new NullPointerException("El cliente no puede ser nulo");
         }
 
         ClientEntity clientEntity = new ClientEntity();
 
-        clientEntity.setDocument(client.getDocument());
-        clientEntity.setName(client.getName());
-        clientEntity.setEmail(client.getEmail());
-        clientEntity.setPhone(client.getPhone());
-        clientEntity.setDeliveryAddress(client.getDeliveryAddress());
+        clientEntity.setDocument(clientDto.getDocument());
+        clientEntity.setName(clientDto.getName());
+        clientEntity.setEmail(clientDto.getEmail());
+        clientEntity.setPhone(clientDto.getPhone());
+        clientEntity.setDeliveryAddress(clientDto.getDeliveryAddress());
 
         return clientEntity;
     }
 
-    public List<ClientDto> toListDto(List<ClientEntity> entityList){
+    public List<ClientDto> toListDto(List<ClientEntity> entityList) {
         List<ClientDto> listDto = new ArrayList<>();
 
-        for (ClientEntity entity : entityList){
+        for (ClientEntity entity : entityList) {
             ClientDto clientDto = new ClientDto();
             clientDto.setDocument(entity.getDocument());
             clientDto.setName(entity.getName());

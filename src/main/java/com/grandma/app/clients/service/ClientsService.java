@@ -13,7 +13,7 @@ public interface ClientsService {
 
     void deleteClient(String document);
 
-    boolean existsClient(String document);
+    Boolean existsClient(String document);
 
     // BONUS TRACK
     List<ClientDto> getOrderClients(String orderBy, String direction);

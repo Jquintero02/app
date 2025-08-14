@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface ClientsRepository extends JpaRepository<ClientEntity, String> {
-    boolean existsByDocument(String document);
+    Boolean existsByDocument(String document);
 
     Optional<ClientEntity> findByDocument(String document);
 

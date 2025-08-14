@@ -3,7 +3,7 @@ package com.grandma.app.clients.controller;
 import com.grandma.app.clients.dto.ClientDto;
 import com.grandma.app.clients.exception.ClientAlreadyExistsException;
 import com.grandma.app.clients.exception.ClientNotFoundException;
-import com.grandma.app.clients.service.ClientsServiceImpl;
+import com.grandma.app.clients.service.ClientsService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,31 +13,20 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/clients")
 public class ClientsController {
 
-    private final ClientsServiceImpl service;
+    private final ClientsService clientService;
 
-    public ClientsController(ClientsServiceImpl service) {
-        this.service = service;
+    public ClientsController(ClientsService clientService) {
+        this.clientService = clientService;
     }
 
     @PostMapping
     public ResponseEntity<ClientDto> createClient(@Valid @RequestBody ClientDto client) {
-        if (client.getDocument() == null || client.getDocument().isEmpty() ||
-                client.getName() == null
-                || client.getName().isEmpty() || client.getEmail() == null ||
-                client.getEmail().isEmpty()
-                || client.getPhone() == null || client.getPhone().isEmpty() ||
-                client.getDeliveryAddress() == null
-                || client.getDeliveryAddress().isEmpty()) {
-            throw new IllegalArgumentException(String.format(
-                    "Datos del cliente inválidos o incompletos: %s", client));
-        }
-
-        if (service.existsClient(client.getDocument())) {
+        if (clientService.existsClient(client.getDocument())) {
             throw new ClientAlreadyExistsException(
                     String.format("Cliente con documento %s ya existe", client.getDocument()));
         }
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.createClient(client));
+        return ResponseEntity.status(HttpStatus.CREATED).body(clientService.createClient(client));
     }
 
     @GetMapping("/{document}")
@@ -47,7 +36,7 @@ public class ClientsController {
                     "Formato de documento inválido: %s", document));
         }
 
-        var client = service.getClient(document);
+        var client = clientService.getClient(document);
 
         if (client == null) {
             throw new ClientNotFoundException(String.format("Cliente con documento %s no encontrado", document));
@@ -72,7 +61,7 @@ public class ClientsController {
                     "Datos del cliente inválidos o incompletos: %s", client));
         }
 
-        service.updateClient(document, client);
+        clientService.updateClient(document, client);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
@@ -84,7 +73,7 @@ public class ClientsController {
                     "Formato de documento inválido: %s", document));
         }
 
-        service.deleteClient(document);
+        clientService.deleteClient(document);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
@@ -99,6 +88,6 @@ public class ClientsController {
         if (direction == null) {
             direction = "ASC";
         }
-        return ResponseEntity.status(HttpStatus.OK).body(service.getOrderClients(orderBy, direction));
+        return ResponseEntity.status(HttpStatus.OK).body(clientService.getOrderClients(orderBy, direction));
     }
 }
