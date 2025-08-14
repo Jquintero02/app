@@ -31,6 +31,7 @@ public class OrdersServiceImpl implements OrdersService {
         this.productsRepository = productsRepository;
     }
 
+    // Review methods and divide for clean code and refactor
     public OrderEntity createOrder(OrderDto orderDto) {
         var foundClient = clientsRepository.findByDocument(orderDto.getClientDocument())
                 .orElseThrow(() -> new ClientNotFoundException("ClientNotFoundException"));
