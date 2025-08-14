@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface ProductsRepository extends JpaRepository<ProductEntity, String> {
-    boolean existsByFantasyName(String fantasyName);
+    Boolean existsByFantasyName(String fantasyName);
 
     Optional<ProductEntity> findByUuid(String uuid);
 

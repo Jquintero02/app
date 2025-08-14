@@ -6,71 +6,68 @@ import com.grandma.app.products.exception.ProductAlreadyExistsException;
 import com.grandma.app.products.exception.ProductNotFoundException;
 import com.grandma.app.products.mapper.ProductMapper;
 import com.grandma.app.products.repository.ProductsRepository;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class ProductsServiceImpl implements ProductsService {
-    private final ProductsRepository repository;
-    private final ProductMapper mapper;
+    private final ProductsRepository productsRepository;
+    private final ProductMapper productMapper;
 
-    public ProductsServiceImpl(ProductsRepository repository, ProductMapper mapper) {
-        this.repository = repository;
-        this.mapper = mapper;
+    public ProductsServiceImpl(ProductsRepository productsRepository, ProductMapper productMapper) {
+        this.productsRepository = productsRepository;
+        this.productMapper = productMapper;
     }
 
-    public ProductDto createProduct(ProductDto product) {
-        if (repository.existsByFantasyName(product.getFantasyName())) {
+    public ProductDto createProduct(ProductDto productDto) {
+        if (productsRepository.existsByFantasyName(productDto.getFantasyName())) {
             throw new ProductAlreadyExistsException(
-                    String.format("Producto con nombre %s ya existe", product.getFantasyName()));
+                    String.format("Producto con nombre %s ya existe", productDto.getFantasyName()));
         }
 
-        return mapper.toDto(repository.save(mapper.toEntity(product)));
+        return productMapper.toDto(productsRepository.save(productMapper.toEntity(productDto)));
     }
 
     public ProductDto getProduct(String uuid) {
-        return repository.findByUuid(uuid)
-                .map(mapper::toDto)
+        return productsRepository.findByUuid(uuid)
+                .map(productMapper::toDto)
                 .orElseThrow(() -> new ProductNotFoundException(
                         String.format("Product con uuid %s no encontrado", uuid)));
     }
 
-    public void updateProduct(String uuid, ProductDto product) {
-        var existingProduct = repository.findByUuid(uuid)
+    public void updateProduct(String uuid, ProductDto productDto) {
+        var existingProduct = productsRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ClientNotFoundException(
                         String.format("Producto con uuid %s no encontrado", uuid)));
 
-        boolean hasChanges = !existingProduct.getFantasyName().equals(product.getFantasyName())
-                || !existingProduct.getCategory().equals(product.getCategory())
-                || !existingProduct.getDescription().equals(product.getDescription())
-                || !existingProduct.getPrice().equals(product.getPrice())
-                || !existingProduct.getAvailable() == product.isAvailable();
+        Boolean hasChanges = !existingProduct.getFantasyName().equals(productDto.getFantasyName())
+                || !existingProduct.getCategory().equals(productDto.getCategory())
+                || !existingProduct.getDescription().equals(productDto.getDescription())
+                || !existingProduct.getPrice().equals(productDto.getPrice())
+                || !existingProduct.getAvailable() == productDto.getAvailable();
 
         if (!hasChanges) {
             throw new IllegalArgumentException("No hay ningún campo diferente en el Request.");
         }
 
-        existingProduct.setFantasyName(product.getFantasyName());
-        existingProduct.setCategory(product.getCategory());
-        existingProduct.setDescription(product.getDescription());
-        existingProduct.setPrice(product.getPrice());
-        existingProduct.setAvailable(product.isAvailable());
+        existingProduct.setFantasyName(productDto.getFantasyName());
+        existingProduct.setCategory(productDto.getCategory());
+        existingProduct.setDescription(productDto.getDescription());
+        existingProduct.setPrice(productDto.getPrice());
+        existingProduct.setAvailable(productDto.getAvailable());
 
-        repository.save(existingProduct);
+        productsRepository.save(existingProduct);
     }
 
     public void deleteProduct(String uuid) {
-        repository.deleteById(uuid);
-    }
-
-    public boolean existsByFantasyName(String fantasyName) {
-        return repository.existsByFantasyName(fantasyName);
+        productsRepository.deleteById(uuid);
     }
 
     // BONUS TRACK
     public List<ProductDto> findByPartialFantasyName(String partialFantasyName) {
-        var entities = repository.findByPartialFantasyName(partialFantasyName);
-        return entities.stream().map(mapper::toDto).toList();
+        var entities = productsRepository.findByPartialFantasyName(partialFantasyName);
+        return entities.stream().map(productMapper::toDto).toList();
     }
 }

@@ -31,7 +31,7 @@ public class ProductMapper {
         productEntity.setCategory(product.getCategory());
         productEntity.setDescription(product.getDescription());
         productEntity.setPrice(product.getPrice());
-        productEntity.setAvailable(product.isAvailable());
+        productEntity.setAvailable(product.getAvailable());
 
         return productEntity;
     }
