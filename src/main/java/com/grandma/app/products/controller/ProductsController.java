@@ -29,8 +29,8 @@ public class ProductsController {
 
     @PutMapping("/{uuid}")
     public ResponseEntity<?> updateproduct(@PathVariable("uuid") String uuid,
-            @Valid @RequestBody ProductDto product) {
-        productsService.updateProduct(uuid, product);
+            @Valid @RequestBody ProductDto productDto) {
+        productsService.updateProduct(uuid, productDto);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

@@ -27,12 +27,13 @@ public class ProductsServiceImpl implements ProductsService {
                     String.format("Producto con nombre %s ya existe", productDto.getFantasyName()));
         }
 
-        return productMapper.toDto(productsRepository.save(productMapper.toEntity(productDto)));
+        return productMapper.productEntityToProductDto(
+                productsRepository.save(productMapper.productDtoToProductEntity(productDto)));
     }
 
     public ProductDto getProduct(String uuid) {
         return productsRepository.findByUuid(uuid)
-                .map(productMapper::toDto)
+                .map(productMapper::productEntityToProductDto)
                 .orElseThrow(() -> new ProductNotFoundException(
                         String.format("Product con uuid %s no encontrado", uuid)));
     }
@@ -68,6 +69,6 @@ public class ProductsServiceImpl implements ProductsService {
     // BONUS TRACK
     public List<ProductDto> findByPartialFantasyName(String partialFantasyName) {
         var entities = productsRepository.findByPartialFantasyName(partialFantasyName);
-        return entities.stream().map(productMapper::toDto).toList();
+        return entities.stream().map(productMapper::productEntityToProductDto).toList();
     }
 }

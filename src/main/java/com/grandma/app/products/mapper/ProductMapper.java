@@ -6,32 +6,26 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ProductMapper {
-    public ProductDto toDto(ProductEntity product) {
-        if (product == null) {
-            throw new NullPointerException("El producto no puede ser nulo");
-        }
+    public ProductDto productEntityToProductDto(ProductEntity productEntity) {
         ProductDto productDto = new ProductDto();
 
-        productDto.setFantasyName(product.getFantasyName().toUpperCase());
-        productDto.setCategory(product.getCategory());
-        productDto.setDescription(product.getDescription());
-        productDto.setPrice(product.getPrice());
-        productDto.setAvailable(product.getAvailable());
+        productDto.setFantasyName(productEntity.getFantasyName().toUpperCase());
+        productDto.setCategory(productEntity.getCategory());
+        productDto.setDescription(productEntity.getDescription());
+        productDto.setPrice(productEntity.getPrice());
+        productDto.setAvailable(productEntity.getAvailable());
 
         return productDto;
     }
 
-    public ProductEntity toEntity(ProductDto product) {
-        if (product == null) {
-            throw new NullPointerException("El producto no puede ser nulo");
-        }
+    public ProductEntity productDtoToProductEntity(ProductDto productDto) {
         ProductEntity productEntity = new ProductEntity();
 
-        productEntity.setFantasyName(product.getFantasyName().toUpperCase());
-        productEntity.setCategory(product.getCategory());
-        productEntity.setDescription(product.getDescription());
-        productEntity.setPrice(product.getPrice());
-        productEntity.setAvailable(product.getAvailable());
+        productEntity.setFantasyName(productDto.getFantasyName().toUpperCase());
+        productEntity.setCategory(productDto.getCategory());
+        productEntity.setDescription(productDto.getDescription());
+        productEntity.setPrice(productDto.getPrice());
+        productEntity.setAvailable(productDto.getAvailable());
 
         return productEntity;
     }
