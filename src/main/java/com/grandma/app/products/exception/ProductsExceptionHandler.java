@@ -16,9 +16,9 @@ public class ProductsExceptionHandler extends GlobalExceptionHandler {
 
         @ExceptionHandler(ProductAlreadyExistsException.class)
         public ResponseEntity<ResponseDto> handle(ProductAlreadyExistsException exception) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(
                                 new ResponseDto(
-                                                HttpStatus.BAD_REQUEST.toString(),
+                                                HttpStatus.CONFLICT.toString(),
                                                 LocalDateTime.now(),
                                                 exception.getMessage(),
                                                 "ProductAlreadyExistsException"));

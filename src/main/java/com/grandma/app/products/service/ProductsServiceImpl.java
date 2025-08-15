@@ -1,6 +1,6 @@
 package com.grandma.app.products.service;
 
-import com.grandma.app.clients.exception.ClientNotFoundException;
+import com.grandma.app.exceptions.NotDifferentFieldException;
 import com.grandma.app.products.dto.ProductDto;
 import com.grandma.app.products.exception.ProductAlreadyExistsException;
 import com.grandma.app.products.exception.ProductNotFoundException;
@@ -40,7 +40,7 @@ public class ProductsServiceImpl implements ProductsService {
 
     public void updateProduct(String uuid, ProductDto productDto) {
         var existingProduct = productsRepository.findByUuid(uuid)
-                .orElseThrow(() -> new ClientNotFoundException(
+                .orElseThrow(() -> new ProductNotFoundException(
                         String.format("Producto con uuid %s no encontrado", uuid)));
 
         Boolean hasChanges = !existingProduct.getFantasyName().equals(productDto.getFantasyName())
@@ -50,7 +50,7 @@ public class ProductsServiceImpl implements ProductsService {
                 || !existingProduct.getAvailable() == productDto.getAvailable();
 
         if (!hasChanges) {
-            throw new IllegalArgumentException("No hay ningún campo diferente en el Request.");
+            throw new NotDifferentFieldException("No hay ningún campo diferente en el Request.");
         }
 
         existingProduct.setFantasyName(productDto.getFantasyName());

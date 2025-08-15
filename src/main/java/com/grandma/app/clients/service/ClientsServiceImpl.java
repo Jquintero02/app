@@ -4,6 +4,7 @@ import com.grandma.app.clients.dto.ClientDto;
 import com.grandma.app.clients.exception.ClientNotFoundException;
 import com.grandma.app.clients.mapper.ClientMapper;
 import com.grandma.app.clients.repository.ClientsRepository;
+import com.grandma.app.exceptions.NotDifferentFieldException;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -48,7 +49,7 @@ public class ClientsServiceImpl implements ClientsService {
                 || !existingClient.getDeliveryAddress().equals(clientDto.getDeliveryAddress());
 
         if (!hasChanges) {
-            throw new IllegalArgumentException("No hay ningún campo diferente en el Request.");
+            throw new NotDifferentFieldException("No hay ningún campo diferente en el Request.");
         }
 
         existingClient.setDocument(clientDto.getDocument());

@@ -26,14 +26,14 @@ public class GlobalExceptionHandler {
                                                 "NotDifferentFieldException"));
         }
 
-        @ExceptionHandler(NullPointerException.class)
-        public ResponseEntity<ResponseDto> handleException(NullPointerException exception) {
+        @ExceptionHandler(IllegalArgumentException.class)
+        public ResponseEntity<ResponseDto> handleException(IllegalArgumentException exception) {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(
                                 new ResponseDto(
                                                 HttpStatus.CONFLICT.toString(),
                                                 LocalDateTime.now(),
                                                 exception.getMessage(),
-                                                "NullPointerException"));
+                                                "IllegalArgumentException"));
         }
 
         @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -56,7 +56,7 @@ public class GlobalExceptionHandler {
 
         @ExceptionHandler(Exception.class)
         public ResponseEntity<ResponseDto> handleException(Exception exception) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
                                 new ResponseDto(
                                                 HttpStatus.BAD_REQUEST.toString(),
                                                 LocalDateTime.now(),
