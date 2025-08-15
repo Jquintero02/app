@@ -34,10 +34,12 @@ public class OrdersServiceImpl implements OrdersService {
     // Review methods and divide for clean code and refactor
     public OrderEntity createOrder(OrderDto orderDto) {
         var foundClient = clientsRepository.findByDocument(orderDto.getClientDocument())
-                .orElseThrow(() -> new ClientNotFoundException("ClientNotFoundException"));
+                .orElseThrow(() -> new ClientNotFoundException(
+                        String.format("Client con documento %s no encontrado", orderDto.getClientDocument())));
 
         var existsProduct = productsRepository.findByUuid(orderDto.getProductUuid())
-                .orElseThrow(() -> new ProductNotFoundException("ProductNotFoundException"));
+                .orElseThrow(() -> new ProductNotFoundException(
+                        String.format("Producto con uuid %s no encontrado", orderDto.getProductUuid())));
 
         OrderEntity orderEntity = orderMapper.orderDtoToOrderEntity(orderDto);
 
@@ -67,12 +69,8 @@ public class OrdersServiceImpl implements OrdersService {
     }
 
     public OrderEntity updateOrder(String uuid, LocalDateTime timestamp) {
-        if (!ordersRepository.existsByUuid(uuid)) {
-            throw new OrderNotFoundException("Order with String " + uuid + " does not exist");
-        }
-
         OrderEntity order = ordersRepository.findById(uuid)
-                .orElseThrow(() -> new OrderNotFoundException(String.format("Order with String %s not found", uuid)));
+                .orElseThrow(() -> new OrderNotFoundException(String.format("Pedido con uuid %s no encontrado", uuid)));
 
         order.setDelivered(true);
         order.setDeliveredDate(timestamp);
