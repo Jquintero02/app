@@ -4,7 +4,7 @@ import com.grandma.app.exceptions.NotDifferentFieldException;
 import com.grandma.app.products.dto.ProductDto;
 import com.grandma.app.products.exception.ProductAlreadyExistsException;
 import com.grandma.app.products.exception.ProductNotFoundException;
-import com.grandma.app.products.mapper.ProductMapper;
+import com.grandma.app.products.mapper.IProductMapper;
 import com.grandma.app.products.repository.ProductsRepository;
 
 import org.springframework.stereotype.Service;
@@ -14,9 +14,9 @@ import java.util.List;
 @Service
 public class ProductsServiceImpl implements ProductsService {
     private final ProductsRepository productsRepository;
-    private final ProductMapper productMapper;
+    private final IProductMapper productMapper;
 
-    public ProductsServiceImpl(ProductsRepository productsRepository, ProductMapper productMapper) {
+    public ProductsServiceImpl(ProductsRepository productsRepository, IProductMapper productMapper) {
         this.productsRepository = productsRepository;
         this.productMapper = productMapper;
     }

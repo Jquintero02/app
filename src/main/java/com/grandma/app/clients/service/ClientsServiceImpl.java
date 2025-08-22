@@ -2,10 +2,9 @@ package com.grandma.app.clients.service;
 
 import com.grandma.app.clients.dto.ClientDto;
 import com.grandma.app.clients.exception.ClientNotFoundException;
-import com.grandma.app.clients.mapper.ClientMapper;
+import com.grandma.app.clients.mapper.IClientMapper;
 import com.grandma.app.clients.repository.ClientsRepository;
 import com.grandma.app.exceptions.NotDifferentFieldException;
-
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -13,28 +12,28 @@ import java.util.List;
 
 @Service
 public class ClientsServiceImpl implements ClientsService {
-    private final ClientsRepository clientsPepository;
-    private final ClientMapper clientMapper;
+    private  ClientsRepository clientsRepository;
+    private  IClientMapper clientMapper;
 
-    public ClientsServiceImpl(ClientsRepository clientsPepository, ClientMapper clientMapper) {
-        this.clientsPepository = clientsPepository;
+    public ClientsServiceImpl(ClientsRepository clientsRepository, IClientMapper clientMapper){
+        this.clientsRepository = clientsRepository;
         this.clientMapper = clientMapper;
     }
 
     public ClientDto createClient(ClientDto clientDto) {
         return clientMapper
-                .clientEntityToClientDto(clientsPepository.save(clientMapper.clientDtoToClientEntity(clientDto)));
+                .clientEntityToClientDto(clientsRepository.save(clientMapper.clientDtoToClientEntity(clientDto)));
     }
 
     public ClientDto getClient(String document) {
-        return clientsPepository.findByDocument(document)
+        return clientsRepository.findByDocument(document)
                 .map(clientMapper::clientEntityToClientDto)
                 .orElseThrow(() -> new ClientNotFoundException(
                         String.format("Cliente con documento %s no encontrado", document)));
     }
 
     public void updateClient(String document, ClientDto clientDto) {
-        var existingClient = clientsPepository.findByDocument(document)
+        var existingClient = clientsRepository.findByDocument(document)
                 .orElseThrow(() -> new ClientNotFoundException(
                         String.format("Cliente con documento %s no encontrado", document)));
 
@@ -58,16 +57,16 @@ public class ClientsServiceImpl implements ClientsService {
         existingClient.setPhone(clientDto.getPhone());
         existingClient.setDeliveryAddress(clientDto.getDeliveryAddress());
 
-        clientsPepository.save(existingClient);
+        clientsRepository.save(existingClient);
     }
 
     public void deleteClient(String document) {
-        var clientToDelete = clientsPepository
+        var clientToDelete = clientsRepository
                 .findByDocument(document)
                 .orElseThrow(() -> new ClientNotFoundException(
                         String.format("Cliente con documento %s no encontrado", document)));
 
-        clientsPepository.delete(clientToDelete);
+        clientsRepository.delete(clientToDelete);
     }
 
     // BONUS TRACK
@@ -88,6 +87,6 @@ public class ClientsServiceImpl implements ClientsService {
         Sort.Direction sortDirection = (direction == null || direction.equalsIgnoreCase("ASC")) ? Sort.Direction.ASC
                 : Sort.Direction.DESC;
         Sort sort = Sort.by(sortDirection, orderByField);
-        return clientMapper.listClientEntityToListClientDto(clientsPepository.findAll(sort));
+        return clientMapper.listClientEntityToListClientDto(clientsRepository.findAll(sort));
     }
 }

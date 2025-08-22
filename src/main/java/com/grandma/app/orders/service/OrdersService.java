@@ -1,12 +1,12 @@
 package com.grandma.app.orders.service;
 
 import com.grandma.app.orders.dto.OrderDto;
-import com.grandma.app.orders.entity.OrderEntity;
+import com.grandma.app.orders.dto.OrderDtoResponse;
 
 import java.time.LocalDateTime;
 
 public interface OrdersService {
-    OrderEntity createOrder(OrderDto orderDto);
+    OrderDtoResponse createOrder(OrderDto orderDto);
 
-    OrderEntity updateOrder(String uuid, LocalDateTime timestamp);
+    OrderDtoResponse updateOrder(String uuid, LocalDateTime timestamp);
 }

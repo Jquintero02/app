@@ -1,5 +1,7 @@
 package com.grandma.app.orders.entity;
 
+import com.grandma.app.clients.entity.ClientEntity;
+import com.grandma.app.products.entity.ProductEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Data;
@@ -19,13 +21,13 @@ public class OrderEntity {
     @Column(name = "creation_date_time", nullable = false)
     private LocalDateTime creationDateTime;
 
-    @Column(name = "client_uuid", nullable = false, unique = true)
-    @JoinColumn(name = "client_uuid", referencedColumnName = "uuid")
-    private String clientUuid;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "client_document", nullable = false)
+    private ClientEntity client;
 
-    @Column(name = "product_uuid", nullable = false, unique = true)
-    @JoinColumn(name = "product_uuid", referencedColumnName = "uuid")
-    private String productUuid;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "product_uuid", nullable = false)
+    private ProductEntity product;
 
     @Column(nullable = false)
     private Integer quantity;
