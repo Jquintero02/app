@@ -30,4 +30,7 @@ public class ProductDto {
 
     @NotNull(message = "El estado no puede ser vacio")
     private Boolean available;
+
+    public ProductDto(String fantasyName, String category, String description, BigDecimal price, boolean available) {
+    }
 }
