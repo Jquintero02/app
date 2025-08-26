@@ -27,7 +27,7 @@ public class ProductsController {
     }
 
     @PutMapping("/{uuid}")
-    public ResponseEntity<?> updateproduct(@PathVariable("uuid") String uuid,
+    public ResponseEntity<?> updateProduct(@PathVariable("uuid") String uuid,
             @Valid @RequestBody ProductDto productDto) {
         productsService.updateProduct(uuid, productDto);
 
@@ -35,7 +35,7 @@ public class ProductsController {
     }
 
     @DeleteMapping("/{uuid}")
-    public ResponseEntity<?> deleteproduct(@PathVariable("uuid") String uuid) {
+    public ResponseEntity<?> deleteProduct(@PathVariable("uuid") String uuid) {
         productsService.deleteProduct(uuid);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

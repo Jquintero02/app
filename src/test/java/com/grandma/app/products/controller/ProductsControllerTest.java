@@ -2,6 +2,8 @@ package com.grandma.app.products.controller;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 class ProductsControllerTest {
 
     @Test
@@ -13,11 +15,11 @@ class ProductsControllerTest {
     }
 
     @Test
-    void updateproduct() {
+    void updateProduct() {
     }
 
     @Test
-    void deleteproduct() {
+    void deleteProduct() {
     }
 
     @Test

@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface OrdersRepository extends JpaRepository<OrderEntity, String> {
-    Boolean existsByUuid(String uuid);
 }

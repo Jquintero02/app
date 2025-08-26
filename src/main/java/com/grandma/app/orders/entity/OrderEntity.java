@@ -21,11 +21,11 @@ public class OrderEntity {
     @Column(name = "creation_date_time", nullable = false)
     private LocalDateTime creationDateTime;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "client_document", nullable = false)
     private ClientEntity client;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "product_uuid", nullable = false)
     private ProductEntity product;
 

@@ -58,7 +58,7 @@ public class GlobalExceptionHandler {
         public ResponseEntity<ResponseDto> handleException(Exception exception) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
                                 new ResponseDto(
-                                                HttpStatus.BAD_REQUEST.toString(),
+                                                HttpStatus.INTERNAL_SERVER_ERROR.toString(),
                                                 LocalDateTime.now(),
                                                 "Error general del servidor",
                                                 exception.getMessage()));

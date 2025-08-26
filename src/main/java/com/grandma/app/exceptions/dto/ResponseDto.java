@@ -1,18 +1,13 @@
 package com.grandma.app.exceptions.dto;
 
-import java.time.LocalDateTime;
-
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@Data
-public class ResponseDto {
-    public ResponseDto(String code, LocalDateTime timestamp, String description, String exception) {
-        this.code = code;
-        this.timestamp = timestamp;
-        this.description = description;
-        this.exception = exception;
-    }
+import java.time.LocalDateTime;
 
+@Data
+@AllArgsConstructor
+public class ResponseDto {
     private String code;
     private LocalDateTime timestamp;
     private String description;

@@ -15,8 +15,6 @@ public interface ProductsRepository extends JpaRepository<ProductEntity, String>
 
     Optional<ProductEntity> findByUuid(String uuid);
 
-    void deleteByUuid(String uuid);
-
     // BONUS TRACK
     @Query("SELECT p FROM ProductEntity p WHERE LOWER(p.fantasyName) LIKE LOWER(CONCAT('%', :partialFantasyName, '%')) ORDER BY p.fantasyName ASC")
     List<ProductEntity> findByPartialFantasyName(@Param("partialFantasyName") String partialFantasyName);

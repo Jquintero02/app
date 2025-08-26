@@ -2,24 +2,23 @@ package com.grandma.app.products.dto;
 
 import com.grandma.app.products.enums.CategoryEnum;
 
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Digits;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.math.BigDecimal;
 
 @Data
+@AllArgsConstructor
 public class ProductDto {
-    @NotNull(message = "El nombre no puede ser vacio")
+    @NotBlank(message = "El nombre no puede ser vacio")
     @Size(max = 255, message = "El nombre no puede tener más de 255 caracteres")
     private String fantasyName;
 
     @NotNull(message = "La categoria no puede ser vacia")
     private CategoryEnum category;
 
-    @NotNull(message = "La descripcion no puede ser vacia")
+    @NotBlank(message = "La descripcion no puede ser vacia")
     @Size(max = 511, message = "El nombre no puede tener más de 511 caracteres")
     private String description;
 
@@ -30,7 +29,4 @@ public class ProductDto {
 
     @NotNull(message = "El estado no puede ser vacio")
     private Boolean available;
-
-    public ProductDto(String fantasyName, String category, String description, BigDecimal price, boolean available) {
-    }
 }
