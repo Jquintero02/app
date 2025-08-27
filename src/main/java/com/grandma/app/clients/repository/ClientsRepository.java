@@ -12,6 +12,6 @@ import java.util.Optional;
 public interface ClientsRepository extends JpaRepository<ClientEntity, String> {
     Optional<ClientEntity> findByDocument(String document);
 
-    // BONUS TRACK: Ordenación dinámica usando Sort
+    // BONUS TRACK: Ordenación dinámica usando Sort (query named)
     List<ClientEntity> findAll(Sort sort);
 }

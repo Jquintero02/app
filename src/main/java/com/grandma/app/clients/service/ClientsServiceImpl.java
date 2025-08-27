@@ -1,6 +1,7 @@
 package com.grandma.app.clients.service;
 
 import com.grandma.app.clients.dto.ClientDto;
+import com.grandma.app.clients.entity.ClientEntity;
 import com.grandma.app.clients.exception.ClientNotFoundException;
 import com.grandma.app.clients.mapper.IClientMapper;
 import com.grandma.app.clients.repository.ClientsRepository;
@@ -13,16 +14,19 @@ import java.util.List;
 @Service
 public class ClientsServiceImpl implements ClientsService {
     private  ClientsRepository clientsRepository;
-    private  IClientMapper clientMapper;
+    private final IClientMapper clientMapper;
 
-    public ClientsServiceImpl(ClientsRepository clientsRepository, IClientMapper clientMapper){
+    public ClientsServiceImpl(ClientsRepository clientsRepository){
         this.clientsRepository = clientsRepository;
-        this.clientMapper = clientMapper;
+        this.clientMapper = IClientMapper.INSTANCE;
     }
 
     public ClientDto createClient(ClientDto clientDto) {
+        ClientEntity entity = clientMapper.clientDtoToClientEntity(clientDto);
+        ClientEntity save = clientsRepository.save(entity);
+
         return clientMapper
-                .clientEntityToClientDto(clientsRepository.save(clientMapper.clientDtoToClientEntity(clientDto)));
+                .clientEntityToClientDto(save);
     }
 
     public ClientDto getClient(String document) {

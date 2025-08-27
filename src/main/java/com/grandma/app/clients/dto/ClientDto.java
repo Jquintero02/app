@@ -3,9 +3,11 @@ package com.grandma.app.clients.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class ClientDto {
     @NotNull(message = "El documento es obligatorio")
     @Size(max = 20, message = "El documento no puede tener más de 20 caracteres")
