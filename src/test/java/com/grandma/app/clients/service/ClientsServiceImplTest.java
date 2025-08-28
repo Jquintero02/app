@@ -2,7 +2,6 @@ package com.grandma.app.clients.service;
 
 import com.grandma.app.clients.dto.ClientDto;
 import com.grandma.app.clients.entity.ClientEntity;
-import com.grandma.app.clients.exception.ClientNotFoundException;
 import com.grandma.app.clients.repository.ClientsRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,6 +11,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -55,26 +56,53 @@ class ClientsServiceImplTest {
         Mockito.verify(clientsRepository).findByDocument(Mockito.anyString());
     }
 
-    // @Test
-    // void updateClient() {
-    // }
-    //
+    @Test
+    void updateClient() {
+        ClientEntity existingClient = new ClientEntity();
+
+        existingClient.setDocument("CC-1");
+        existingClient.setName("Juan");
+        existingClient.setEmail("juan@gmai  l.com");
+        existingClient.setPhone("3128283889");
+        existingClient.setDeliveryAddress("cl 9a");
+
+        Mockito.doReturn(Optional.of(existingClient)).when(clientsRepository).findByDocument("CC-1");
+
+        ClientDto updatedClientDto = new ClientDto(
+                "CC-1",
+                "Juan Perez",
+                "juanp@gmail.com",
+                "3128283890",
+                "cl 10a");
+
+        clientsService.updateClient("CC-1", updatedClientDto);
+
+        Mockito.verify(clientsRepository).save(Mockito.any(ClientEntity.class));
+
+        Mockito.verify(clientsRepository).findByDocument("CC-1");
+    }
 
     @Test
     void deleteClient() {
-        Mockito.doNothing().when(clientsRepository).delete(Mockito.any(ClientEntity.class));
+        Mockito.doReturn(Optional.of(new ClientEntity())).when(clientsRepository).findByDocument(Mockito.anyString());
 
         clientsService.deleteClient("CC-1");
 
-        Assertions.assertThrows(ClientNotFoundException.class, () -> {
-            Mockito.verify(clientsRepository).findByDocument(Mockito.anyString());
-        });
+        Mockito.verify(clientsRepository).delete(Mockito.any(ClientEntity.class));
+
+        Mockito.verify(clientsRepository).findByDocument(Mockito.anyString());
     }
 
-    //
-    // @Test
-    // void getOrderClients() {
-    // Mockito.when(clientsService.getOrderClients("NAME",
-    // "ASC")).thenReturn(List.of(clientDto));
-    // }
+    @Test
+    void getOrderClients() {
+        List<ClientEntity> clientEntities = new ArrayList<>();
+        clientEntities.add(new ClientEntity());
+
+        Mockito.doReturn(clientEntities).when(clientsRepository).findAll();
+
+        List<ClientDto> result = clientsService.getOrderClients("name", "asc");
+
+        Assertions.assertNotNull(result);
+        Mockito.verify(clientsRepository).findAll();
+    }
 }
