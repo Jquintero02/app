@@ -13,10 +13,10 @@ import java.util.List;
 
 @Service
 public class ClientsServiceImpl implements ClientsService {
-    private  ClientsRepository clientsRepository;
+    private ClientsRepository clientsRepository;
     private final IClientMapper clientMapper;
 
-    public ClientsServiceImpl(ClientsRepository clientsRepository){
+    public ClientsServiceImpl(ClientsRepository clientsRepository) {
         this.clientsRepository = clientsRepository;
         this.clientMapper = IClientMapper.INSTANCE;
     }

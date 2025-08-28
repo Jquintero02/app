@@ -6,7 +6,7 @@ import org.mockito.Mockito;
 import org.springframework.data.domain.Sort;
 
 class ClientsRepositoryTest {
-    private ClientsRepository clientsRepository = Mockito.mock(ClientsRepository.class);
+    private ClientsRepository clientsRepository;
 
     @Test
     void findByDocument() {

@@ -16,9 +16,9 @@ public class ProductsServiceImpl implements ProductsService {
     private final ProductsRepository productsRepository;
     private final IProductMapper productMapper;
 
-    public ProductsServiceImpl(ProductsRepository productsRepository, IProductMapper productMapper) {
+    public ProductsServiceImpl(ProductsRepository productsRepository) {
         this.productsRepository = productsRepository;
-        this.productMapper = productMapper;
+        this.productMapper = IProductMapper.INSTANCE;
     }
 
     public ProductDto createProduct(ProductDto productDto) {

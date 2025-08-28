@@ -5,10 +5,12 @@ import com.grandma.app.products.enums.CategoryEnum;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class ProductDto {
     @NotBlank(message = "El nombre no puede ser vacio")
